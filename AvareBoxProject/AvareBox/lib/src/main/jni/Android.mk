@@ -24,6 +24,6 @@ LOCAL_SRC_FILES := Jni/VAJni.cpp \
 LOCAL_LDLIBS := -llog -latomic
 LOCAL_STATIC_LIBRARIES := hookzz fb
 
-include $(BUILD_SHARED_LIBRARY)
+#include $(BUILD_SHARED_LIBRARY)
 include $(MAIN_LOCAL_PATH)/HookZz/Android.mk
 include $(MAIN_LOCAL_PATH)/fb/Android.mk
