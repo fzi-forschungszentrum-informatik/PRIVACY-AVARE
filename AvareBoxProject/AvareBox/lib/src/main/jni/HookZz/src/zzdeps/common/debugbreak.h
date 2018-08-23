@@ -22,6 +22,11 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
+ *
+ *
+ * 
+ * Changed by AVARE Project 2018/08/23
+ *
  */
 
 #ifndef DEBUG_BREAK_H
@@ -67,7 +72,7 @@ enum {
 __attribute__((gnu_inline, always_inline)) __inline__ static void trap_instruction(void) {
 /* See 'arm-linux-tdep.c' in GDB source.
  * Both instruction sequences below work. */
-#if 1
+#if 0
     /* 'eabi_linux_thumb_le_breakpoint' */
     __asm__ volatile(".inst 0xde01");
 #else
