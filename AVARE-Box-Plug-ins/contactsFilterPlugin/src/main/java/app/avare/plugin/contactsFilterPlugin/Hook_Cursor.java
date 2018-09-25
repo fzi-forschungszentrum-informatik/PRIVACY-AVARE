@@ -1,9 +1,5 @@
 package app.avare.plugin.contactsFilterPlugin;
 
-/**
- * Created by AVARE Project 2018/07/26
- */
-
 /*
         Copyright 2016-2018 AVARE project team
 
@@ -23,24 +19,15 @@ package app.avare.plugin.contactsFilterPlugin;
         limitations under the License.
 */
 
-
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.net.Uri;
+import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.util.Log;
 
-import org.json.*;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-/*
-even though fields and methods seem unused they can not be deleted, they are used by yahfa to hook calls to functions
- */
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Hook_Cursor {
 
@@ -49,9 +36,14 @@ public class Hook_Cursor {
     public static String methodSig = "(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;";
 
     public static Cursor hook(Object thiz, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        Cursor cursor = backup(thiz, uri, projection, selection, selectionArgs, sortOrder);
 
-        HookCursor hc = new HookCursor(cursor);
+        Log.i("Hook Cursor", "Uri: " + uri);
+
+        Cursor cursor = backup(thiz, uri, projection, selection, selectionArgs, sortOrder);
+        JSONParser jp = new JSONParser();
+
+
+        HookCursor hc = new HookCursor(cursor, jp);
         Log.d("CONTACTS HOOK", "cursor Hooked!!");
 
         return hc;
@@ -64,55 +56,70 @@ public class Hook_Cursor {
 
     private static class HookCursor extends CursorWrapper {
 
-        private HookCursor(Cursor c) {
+        JSONParser parser;
+        JSONArray vertical;
+        JSONArray horizontal;
+
+        private HookCursor(Cursor c, JSONParser config) {
+
             super(c);
+            this.parser = config;
+            this.vertical = this.parser.getContactsSettings("vertical");
+            this.horizontal = this.parser.getContactsSettings("horizontal");
             Log.d("constructor", "Private class HookCursor Constructed!");
 
         }
 
         @Override
         public String getString(int columnIndex) {
-            Log.d("HookCursor", "Using HookCursor");
 
-            /*//TODO: read json file with stored settings and apply settings appropriately
-            Class aClass = Hook_Cursor.class;
-            String json = null;
-            try {
-                InputStream is = aClass.getResourceAsStream("/res/raw/sample.json");
-                int size = is.available();
-                byte[] buffer = new byte[size];
-                is.read(buffer);
-                is.close();
-                json = new String(buffer, "UTF-8");
-            } catch (IOException ex) {
-                ex.printStackTrace();
-                //return null;
-            }
-            //return json;
-            try {
-                JSONObject obj = new JSONObject(json);
-                //TODO
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-
-            if (columnIndex == super.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY)) {
-                //TODO check for same LOOKUP_KEY
-                return "";
-
+            Log.i("Hook Cursor", "Common Data Kinds: " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            Log.i(("Hook Cursor"), "Contacts: " + ContactsContract.Contacts.DISPLAY_NAME);
+            //Log.d("HookCursor", "Using HookCursor");
+          /*  if (columnIndex == super.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)) {
+                String givenName = super.getString(super.getColumnIndex(ContactsContract.
+                        CommonDataKinds.StructuredName.GIVEN_NAME));
+                return givenName;
             }*/
 
 
+            if (columnIndex == super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME)) {
+                return "";
+            }
 
             String s = super.getString(columnIndex);
             if (columnIndex == super.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)) {
                 String[] splits = s.split(" ");
-               // if (splits.length == 2) {
-                    return splits[0]; //always returns first Element for now, might not work as expected w/ double first names without hyphens
-                //}
+                return splits[0];
             }
-            return s;
+            return super.getString(columnIndex);
+        }
+
+        @Override
+        public boolean moveToNext() {
+            try {
+                //Log.i("HOOK CURSOR", "Using Hook Cursor moveToNext()");
+                boolean next = super.moveToNext();
+                if (next) {
+                    //Log.i("HOOK CURSOR", "Querying name");
+                    String currentName = super.getString(this.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+
+
+                    if (JSONParser.jSONArrayContains(this.horizontal, currentName)) {
+
+                        Log.i("HOOK CURSOR", "Found name, moving cursor..");
+
+                        boolean foundNext = super.moveToNext();
+                        Log.i("HOOK CURSOR", "Skipped row");
+                        return foundNext;
+                    }
+                }
+                return next;
+            } catch (Exception e) {
+                Log.i("HOOK CURSOR", "Exception Occured..");
+                e.printStackTrace();
+                return super.moveToNext();
+            }
         }
     }
 }

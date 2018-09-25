@@ -1,10 +1,5 @@
 package app.avare.yahfa;
 
-/**
- * Created by liuruikai756 on 31/03/2017.
- * Edited by AVARE Project 2018/07/26
- */
-
 /*
         Copyright 2016-2018 AVARE project team
 
@@ -24,15 +19,11 @@ package app.avare.yahfa;
         limitations under the License.
 */
 
-/*
-even though fields and methods seem unused they can not be deleted, they are used by yahfa to hook calls to functions
- */
-
 public class HookInfo {
     static {
         System.loadLibrary("helloJni");
     }
     public static String[] hookItemNames = {
-        "app.avare.plugin.contactsFilterPlugin.Hook_Cursor" //the hook to be applied
+        "app.avare.plugin.contactsFilterPlugin.Hook_Cursor"
     };
 }
