@@ -69,7 +69,13 @@ public class Hook_Cursor {
             Log.d("HookCursor", "Using HookCursor");
 
             String s = super.getString(columnIndex);
-            if (columnIndex == super.getColumnIndex(CalendarContract.Events.TITLE)) { //TITLE, DTSTART, DTEND, EVENT_LOCATION
+            //Use CALENDAR_DISPLAY_NAME for horizontal filter (filter out a complete calendar)
+            //Use TITLE to filter the title of an event
+            //Use DTSTART to filter the start date/time of an event
+            //Use DTEND to filter the end date/time of an event
+            //Use EVENT_LOCATION to filter the location of an event
+            //See https://developer.android.com/reference/android/provider/CalendarContract.Events for a complete list
+            if (columnIndex == super.getColumnIndex(CalendarContract.Events.TITLE)) { //TITLE, DTSTART, DTEND, EVENT_LOCATION, CALENDAR_DISPLAY_NAME
 
                 return null; //takes a feature of an event and just returns null instead. Examples for available features are listed above.
             }
