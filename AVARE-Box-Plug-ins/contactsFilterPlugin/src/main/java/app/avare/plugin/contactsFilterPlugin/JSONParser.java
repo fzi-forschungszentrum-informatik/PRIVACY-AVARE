@@ -33,7 +33,7 @@ public class JSONParser {
 
     public JSONParser() {
         this.fr = new FileReader();
-        this.config = fr.readFile("config.json");
+        this.config = fr.readFile("avare_demo_config.json");
         try {
             this.configJSON = new JSONObject(config);
         } catch (JSONException e) {
@@ -43,7 +43,9 @@ public class JSONParser {
 
     public JSONArray getContactsSettings(String type) {
         try {
-            JSONObject settings = this.configJSON.getJSONObject("settings");
+            JSONArray categories = this.configJSON.getJSONArray("categories");
+            JSONObject category = categories.getJSONObject(0);
+            JSONObject settings = category.getJSONObject("settings");
             //Log.i("JSON Parser", "Settings Config: " + settings);
             JSONObject contacts = settings.getJSONObject("contacts");
             //Log.i("JSON Parser", "Contacts Config: " + contacts);

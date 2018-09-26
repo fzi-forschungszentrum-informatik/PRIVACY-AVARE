@@ -22,12 +22,10 @@ package app.avare.plugin.contactsFilterPlugin;
 import android.database.Cursor;
 import android.database.CursorWrapper;
 import android.net.Uri;
-import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 public class Hook_Cursor {
 
@@ -39,7 +37,35 @@ public class Hook_Cursor {
 
         Log.i("Hook Cursor", "Uri: " + uri);
 
-        Cursor cursor = backup(thiz, uri, projection, selection, selectionArgs, sortOrder);
+
+        String[] newProjection;
+        if (projection != null) {
+            boolean containsContactsId = false;
+            for (int i = 0; i < projection.length; i++) {
+                if (projection[i].equals(ContactsContract.Data.CONTACT_ID)) {
+                    containsContactsId = true;
+                }
+            }
+            if (!containsContactsId) {
+                newProjection = new String[projection.length + 1];
+                for (int i = 0; i < projection.length; i++) {
+                    newProjection[i] = projection[i];
+                }
+                newProjection[projection.length] = ContactsContract.Data.CONTACT_ID;
+                for (int i = 0; i < newProjection.length; i++) {
+                    Log.i("new projection", newProjection[i]);
+                }
+            } else {
+                newProjection = projection;
+            }
+
+        } else {
+            newProjection = null;
+        }
+
+
+        Cursor cursor = backup(thiz, uri, newProjection, selection, selectionArgs, sortOrder);
+
         JSONParser jp = new JSONParser();
 
 
@@ -73,8 +99,8 @@ public class Hook_Cursor {
         @Override
         public String getString(int columnIndex) {
 
-            Log.i("Hook Cursor", "Common Data Kinds: " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            Log.i(("Hook Cursor"), "Contacts: " + ContactsContract.Contacts.DISPLAY_NAME);
+            //Log.i("Hook Cursor", "Common Data Kinds: " + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+            //Log.i(("Hook Cursor"), "Contacts: " + ContactsContract.Contacts.DISPLAY_NAME);
             //Log.d("HookCursor", "Using HookCursor");
           /*  if (columnIndex == super.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)) {
                 String givenName = super.getString(super.getColumnIndex(ContactsContract.
@@ -98,19 +124,24 @@ public class Hook_Cursor {
         @Override
         public boolean moveToNext() {
             try {
-                //Log.i("HOOK CURSOR", "Using Hook Cursor moveToNext()");
+                Log.i("HOOK CURSOR", "Using Hook Cursor moveToNext()");
                 boolean next = super.moveToNext();
                 if (next) {
-                    //Log.i("HOOK CURSOR", "Querying name");
-                    String currentName = super.getString(this.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    Log.i("HOOK CURSOR", "Querying ID");
+                    for (int i = 0; i < this.getColumnCount(); i++) {
+                        Log.i("HOOK CURSOR table", this.getColumnName(i) + ": " + this.getString(i));
+                    }
+                    String currentID = this.getString(this.getColumnIndex(ContactsContract.Data.CONTACT_ID));
+                    if (currentID == null || currentID.equals("")) {
+                        currentID = this.getString(this.getColumnIndex(ContactsContract.Contacts._ID));
+                    }
+                    Log.i("HOOK CURSOR", "Current ID: " + currentID);
 
+                    if (currentID != null && !JSONParser.jSONArrayContains(this.horizontal, currentID)) {
 
-                    if (JSONParser.jSONArrayContains(this.horizontal, currentName)) {
+                        Log.i("HOOK CURSOR", "Filtering ID, moving cursor..");
 
-                        Log.i("HOOK CURSOR", "Found name, moving cursor..");
-
-                        boolean foundNext = super.moveToNext();
-                        Log.i("HOOK CURSOR", "Skipped row");
+                        boolean foundNext = this.moveToNext();
                         return foundNext;
                     }
                 }
@@ -118,7 +149,7 @@ public class Hook_Cursor {
             } catch (Exception e) {
                 Log.i("HOOK CURSOR", "Exception Occured..");
                 e.printStackTrace();
-                return super.moveToNext();
+                return this.moveToNext();
             }
         }
     }

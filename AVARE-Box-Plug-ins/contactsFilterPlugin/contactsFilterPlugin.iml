@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id=":contactsFilterPlugin" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$USER_HOME$/studium/ba/subversion/AVARE/student/gapp/PRIVACY-AVARE-master/AvareBoxProject/AvareBox" external.system.id="GRADLE" type="JAVA_MODULE" version="4">
+<module external.linked.project.id=":contactsFilterPlugin" external.linked.project.path="$MODULE_DIR$" external.root.project.path="$MODULE_DIR$/.." external.system.id="GRADLE" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
@@ -105,18 +105,18 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.google.code.findbugs:jsr305:2.0.1@jar" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: javax.inject:javax.inject:1@jar" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-idling-resource-2.2.2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: junit:junit:4.12@jar" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.hamcrest:hamcrest-core:1.3@jar" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: javax.annotation:javax.annotation-api:1.2@jar" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.android.support.test:runner-0.5" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.android.support.test.espresso:espresso-core-2.2.2" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.android.support.test:exposed-instrumentation-api-publish-0.5" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.hamcrest:hamcrest-library:1.3@jar" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: org.hamcrest:hamcrest-integration:1.3@jar" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1@jar" level="project" />
-    <orderEntry type="library" exported="" scope="TEST" name="Gradle: com.android.support.test:rules-0.5" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="com.android.support.test:exposed-instrumentation-api-publish-0.5" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="org.hamcrest:hamcrest-core:1.3@jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="com.android.support.test.espresso:espresso-core-2.2.2" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="junit:junit:4.12@jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="com.android.support.test:rules-0.5" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="org.hamcrest:hamcrest-library:1.3@jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="org.hamcrest:hamcrest-integration:1.3@jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="javax.inject:javax.inject:1@jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="com.android.support.test:runner-0.5" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="com.squareup:javawriter:2.1.1@jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="com.android.support.test.espresso:espresso-idling-resource-2.2.2" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="javax.annotation:javax.annotation-api:1.2@jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="com.google.code.findbugs:jsr305:2.0.1@jar" level="project" />
   </component>
 </module>
