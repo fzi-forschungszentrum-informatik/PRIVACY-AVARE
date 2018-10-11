@@ -37,7 +37,6 @@ even though fields and methods seem unused they can not be deleted, they are use
  */
 
 public class Hook_Cursor {
-
     public static String className = "android.content.ContentResolver";
     public static String methodName = "query";
     public static String methodSig = "(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;";

@@ -22,6 +22,10 @@ package app.avare.hidelocation.worker;
         limitations under the License.
 */
 
+import android.util.Log;
+
+import app.avare.lib.configparser.JSONParser;
+
 /*
 this class only stores the radius and the boolean 'initialized' -> this can probably be included in Hook_Location_getLatitude by now
 also worker is probably not a good package name for this anymore
@@ -30,8 +34,8 @@ public class Datahandler {
 
     private static boolean initialized = false;
 
-    private final static int radiusMin = 0; //no min radius at the moment
-    private final static int radiusMax = 200; //200m
+    private static int radiusMin = 0; //no min radius at the moment
+    private static int radiusMax; //reads radius from the config json
 
 
     public static int getRadiusMin() {
@@ -39,7 +43,9 @@ public class Datahandler {
     }
 
     public static int getRadiusMax() {
-        return radiusMax;
+        JSONParser jp = new JSONParser();
+        Log.i("Datahandler", "Returning radius: " + jp.getLocationRadius());
+        return jp.getLocationRadius();
     }
 
     public static boolean isInitialized() {

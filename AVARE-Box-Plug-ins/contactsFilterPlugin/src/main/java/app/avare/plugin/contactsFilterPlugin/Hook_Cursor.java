@@ -27,6 +27,9 @@ import android.util.Log;
 
 import org.json.JSONArray;
 
+import app.avare.lib.configparser.JSONParser;
+
+
 public class Hook_Cursor {
 
     public static String className = "android.content.ContentResolver";
@@ -77,6 +80,7 @@ public class Hook_Cursor {
 
     public static Cursor backup(Object thiz, Uri uri, String[] projection, String selection, String[] selectionAgs, String sortOrder) {
         Log.d("BACKUP", "Unfortunately the backup method was called");
+
         return null;
     }
 

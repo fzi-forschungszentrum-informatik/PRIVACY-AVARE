@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ConfigParser/ConfigParser.iml" filepath="$PROJECT_DIR$/ConfigParser/ConfigParser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/contactsFilterPlugin.iml" filepath="$PROJECT_DIR$/contactsFilterPlugin.iml" />
+    </modules>
+  </component>
+</project>
