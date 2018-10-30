@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  couchdb:
+    image: couchdb:latest
+    volumes:
+      - couchdb_data:/opt/couchdb/data
+    ports:
+      - "5984:5984"
+    restart: always
+
+  syncserver:
+    image: lukasstruppek/syncserver:latest
+    depends_on:
+      - couchdb
+    ports:
+      - "8443:8443"
+    restart: always
+
+volumes:
+  couchdb_data:

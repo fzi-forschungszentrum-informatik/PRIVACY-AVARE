@@ -1,0 +1,10 @@
+de.privacy_avare
+de.privacy_avare.config
+de.privacy_avare.controller
+de.privacy_avare.domain
+de.privacy_avare.dto
+de.privacy_avare.errorHandler
+de.privacy_avare.exeption
+de.privacy_avare.repository
+de.privacy_avare.scheduler
+de.privacy_avare.service
