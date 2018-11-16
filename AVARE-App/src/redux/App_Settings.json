@@ -1,0 +1,62 @@
+
+{ 
+  "_id": 1, 
+  "category_id": 2,
+  "settings": {
+    "location": {
+      "status": "filtered", 
+      "blockSettings": {
+        "blockTime": "2018-06-14T15:05:30", 
+        "duration": 3600
+      },
+      "filterSettings": {
+        "distance": 50
+      }
+    },
+    "contacts": {
+      "status": "filtered",
+      "filterSettings": {
+        "horizontal": [
+          "Fritsch", 
+          "company='AIFB'" 
+        ],
+        "vertical": [
+          "lastName",
+          "company"
+        ]
+      }
+    },
+    "internet": {
+      "status": "blocked",
+      "blockSettings": {
+        "blockTime": "2018-06-14T15:05:30",
+        "duration": 3600
+      },
+      "filterSettings": {
+        "filterIP": [
+          "192.160.1.1",
+          "123.456.7.8"
+        ]
+      }
+    },
+    "camera": {
+      "status": "blocked"
+    },
+    "mic": {
+      "status": "enabled"
+    },
+    "environment": "blocked",
+    "movement": "blocked",
+    "bluetooth": "enabled",
+    "nfc": "blocked",
+    "calls": "enabled",
+    "sms": "blocked",
+    "calender": "blocked",
+    "accounts": "filtered",
+    "storage": "filtered",
+    "identity": "blocked",
+    "smsHistory": "blocked",
+    "mmsHistory": "blocked",
+    "callsHistory": "blocked"
+  }
+}

@@ -1,0 +1,8 @@
+[1109/131220.270:ERROR:process_info.cc(359)] UncheckedAllocate
+[1109/131222.199:ERROR:process_info.cc(359)] UncheckedAllocate
+[1109/131235.791:ERROR:process_info.cc(359)] UncheckedAllocate
+[1109/131235.827:ERROR:process_info.cc(329)] VirtualQueryEx: Zugriff verweigert (0x5)
+[1109/131235.828:ERROR:process_info.cc(550)] ReadMemoryInfo failed
+[1109/131235.830:ERROR:process_reader_win.cc(151)] SuspendThread: Zugriff verweigert (0x5)
+[1109/131235.831:ERROR:exception_snapshot_win.cc(88)] thread ID 1244 not found in process
+[1109/131235.831:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Es wurde versucht, auf einen Prozess zuzugreifen, der gerade beendet wurde. (0xc000010a)

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="app.virtualhook">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--for React-Native-Development -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <!-- android:name="app.avare.avarebox.VApp" -->
+    <application
+
+        android:name="app.avare.avaremanager.MainApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="4HPBZ-2QWC6-H47SR-M6PZY-MTZB5-N2F4F"/>
+
+        <activity
+            android:name="app.avare.avarebox.splash.SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
+        </activity>
+
+        <activity
+            android:name="app.avare.avarebox.home.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/UITheme"/>
+
+        <activity
+            android:name="app.avare.avarebox.home.ListAppActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/UITheme"/>
+
+        <activity
+            android:name="app.avare.avarebox.home.LoadingActivity"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:screenOrientation="portrait"
+            android:taskAffinity="va.task.loading"
+            android:theme="@style/TransparentTheme"/>
+        <activity
+            android:name=".home.location.VirtualLocationSettings"
+            android:screenOrientation="portrait"
+            android:theme="@style/UITheme"
+            />
+
+        <activity
+            android:name=".home.location.MarkerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/UITheme"
+            />
+
+        <activity
+            android:name="app.avare.avaremanager.ReactMainActivity"
+            android:label="@string/app_name"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="adjustResize">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <!-- for React-native dev m_ode-->
+        <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+    </application>
+
+</manifest>

@@ -1,0 +1,17 @@
+{
+  "buildFiles": [
+    "C:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Android.mk",
+    "C:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Application.mk"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\vz0674\\AppData\\Local\\Android\\sdk\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Android.mk NDK_APPLICATION_MK\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Application.mk APP_ABI\u003dx86 NDK_ALL_ABIS\u003dx86 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003dC:/Users/vz0674/Desktop/AvareApp/android/demoHookPlugin/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\build\\intermediates\\ndkBuild\\debug\\lib clean"
+  ],
+  "libraries": {
+    "helloJni-debug-x86": {
+      "artifactName": "helloJni",
+      "buildCommand": "C:\\Users\\vz0674\\AppData\\Local\\Android\\sdk\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Android.mk NDK_APPLICATION_MK\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Application.mk APP_ABI\u003dx86 NDK_ALL_ABIS\u003dx86 NDK_DEBUG\u003d1 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003dC:/Users/vz0674/Desktop/AvareApp/android/demoHookPlugin/build/intermediates/ndkBuild/debug/obj NDK_LIBS_OUT\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\build\\intermediates\\ndkBuild\\debug\\lib C:/Users/vz0674/Desktop/AvareApp/android/demoHookPlugin/build/intermediates/ndkBuild/debug/obj/local/x86/libhelloJni.so",
+      "abi": "x86",
+      "output": "C:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\build\\intermediates\\ndkBuild\\debug\\obj\\local\\x86\\libhelloJni.so"
+    }
+  }
+}
