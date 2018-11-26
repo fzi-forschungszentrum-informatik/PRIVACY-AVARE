@@ -14,7 +14,7 @@
     "native-base": "^2.8.1",
     "react": "16.6.0-alpha.8af6728",
     "react-native": "0.57.4",
-    "react-native-calendar-events": "^1.6.3",
+    "react-native-calendar-events": "git+https://git@github.com/andrfr/react-native-calendar-events.git",
     "react-native-contacts": "^2.2.4",
     "react-native-fs": "^2.12.1",
     "react-native-paper": "^2.2.4",

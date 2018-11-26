@@ -1,29 +1,29 @@
 {
   "buildFiles": [
-    "C:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Android.mk",
-    "C:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Application.mk"
+    "/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/src/main/jni/Android.mk",
+    "/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/src/main/jni/Application.mk"
   ],
   "cleanCommands": [
-    "C:\\Users\\vz0674\\AppData\\Local\\Android\\sdk\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Android.mk NDK_APPLICATION_MK\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003dC:/Users/vz0674/Desktop/AvareApp/android/demoHookPlugin/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\build\\intermediates\\ndkBuild\\release\\lib clean"
+    "/home/android/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/src/main/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/build/intermediates/ndkBuild/release/lib clean"
   ],
   "libraries": {
     "helloJni-release-armeabi-v7a": {
-      "buildCommand": "C:\\Users\\vz0674\\AppData\\Local\\Android\\sdk\\ndk-bundle\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Android.mk NDK_APPLICATION_MK\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003dC:/Users/vz0674/Desktop/AvareApp/android/demoHookPlugin/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dC:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\build\\intermediates\\ndkBuild\\release\\lib C:/Users/vz0674/Desktop/AvareApp/android/demoHookPlugin/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libhelloJni.so",
+      "buildCommand": "/home/android/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/src/main/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/build/intermediates/ndkBuild/release/lib /home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libhelloJni.so",
       "toolchain": "toolchain-armeabi-v7a",
       "abi": "armeabi-v7a",
       "artifactName": "helloJni",
       "files": [
         {
-          "src": "C:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\src\\main\\jni\\helloJni.c",
-          "flags": "-gcc-toolchain C:/Users/vz0674/AppData/Local/Android/sdk/ndk-bundle/build//../toolchains/arm-linux-androideabi-4.9/prebuilt/windows-x86_64 -fpic -ffunction-sections -funwind-tables -fstack-protector-strong -Wno-invalid-command-line-argument -Wno-unused-command-line-argument -no-canonical-prefixes -fno-integrated-as -g -target armv7-none-linux-androideabi21 -march\u003darmv7-a -mfloat-abi\u003dsoftfp -mfpu\u003dvfpv3-d16 -mthumb -Os -DNDEBUG -IC:/Users/vz0674/Desktop/AvareApp/android/demoHookPlugin/src/main/jni -DANDROID -D__ANDROID_API__\u003d21 -Wa,--noexecstack -Wformat -Werror\u003dformat-security --sysroot C:/Users/vz0674/AppData/Local/Android/sdk/ndk-bundle/build//../sysroot -isystem C:/Users/vz0674/AppData/Local/Android/sdk/ndk-bundle/build//../sysroot/usr/include/arm-linux-androideabi"
+          "src": "/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/src/main/jni/helloJni.c",
+          "flags": "-target armv7-none-linux-androideabi21 -fdata-sections -ffunction-sections -fstack-protector-strong -funwind-tables -no-canonical-prefixes -g -Wno-invalid-command-line-argument -Wno-unused-command-line-argument -gcc-toolchain /home/android/Android/Sdk/ndk-bundle/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64 -fpic -march\u003darmv7-a -mfloat-abi\u003dsoftfp -mfpu\u003dvfpv3-d16 -mthumb -Oz -DNDEBUG -I/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/src/main/jni -DANDROID -Wa,--noexecstack -Wformat -Werror\u003dformat-security --sysroot /home/android/Android/Sdk/ndk-bundle/sysroot -isystem /home/android/Android/Sdk/ndk-bundle/sysroot/usr/include/arm-linux-androideabi"
         }
       ],
-      "output": "C:\\Users\\vz0674\\Desktop\\AvareApp\\android\\demoHookPlugin\\build\\intermediates\\ndkBuild\\release\\obj\\local\\armeabi-v7a\\libhelloJni.so"
+      "output": "/home/android/Workspace/PRIVACY-AVARE/AVARE-App/android/demoHookPlugin/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libhelloJni.so"
     }
   },
   "toolchains": {
     "toolchain-armeabi-v7a": {
-      "cCompilerExecutable": "C:\\Users\\vz0674\\AppData\\Local\\Android\\sdk\\ndk-bundle\\build\\..\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe"
+      "cCompilerExecutable": "/home/android/Android/Sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/clang"
     }
   },
   "cFileExtensions": [

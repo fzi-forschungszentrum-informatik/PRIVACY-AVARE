@@ -1,12 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    //compileSdkVersion 25
+    compileSdkVersion 27
+    //buildToolsVersion "25.0.2"
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "lab.galaxy.demeHookPlugin"
         minSdkVersion 21
-        targetSdkVersion 23
+        //targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
