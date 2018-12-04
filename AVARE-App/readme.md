@@ -13,3 +13,7 @@ Basic setup to get started:
 For JS Development:
 - run `npm run start` to get the development server running
 - if you have trouble connecting your device try `npm run connect`
+
+## License
+
+AVARE-App is distributed under GNU GPL V3. AVARE-App is a part of the AVARE-PROJECT.

@@ -20,25 +20,59 @@
         limitations under the License.
 */
 import React, { Component } from 'react';
-import { DrawerActions } from 'react-navigation';
+import { ScrollView } from 'react-native';
+import { DrawerActions, SafeAreaView } from 'react-navigation';
 import { Drawer } from 'react-native-paper';
 
 export default class SideBar extends Component {
     //TODO: https://codeburst.io/custom-drawer-using-react-navigation-80abbab489f7
     render() {
+        let mainSection = this.props.items.slice(0, 1);
+        let infoSection = this.props.items.slice(1, 3);
+        let preliminarySection = this.props.items.slice(3);
         return(
-            <Drawer.Section>
-                {
-                    this.props.items.map((item) => {
+            <ScrollView>
+                <SafeAreaView style={{ flex: 1}} forceInset={{ top: 'always', horizontal: 'never' }}>
+                    <Drawer.Section>
+                        {
+                            mainSection.map((item) => {
 
-                        return(<Drawer.Item key={item.key} label={item.key} 
-                        onPress={()=>{
-                            this.props.navigation.navigate(item.routeName);
-                            this.props.navigation.dispatch(DrawerActions.closeDrawer());
-                        }}/>)
-                    })
-                }
-            </Drawer.Section>
+                                return (<Drawer.Item key={item.key} label="Meine Präferenzen"
+                                    onPress={() => {
+                                        this.props.navigation.navigate(item.routeName);
+                                        this.props.navigation.dispatch(DrawerActions.closeDrawer());
+                                    }} />)
+                            })
+                        }
+                    </Drawer.Section>
+                    <Drawer.Section>
+                        {
+                            infoSection.map((item, index) => {
+                                //TODO: this is currently an ugly solution to custom labels
+                                let label = (index === 0) ? 'Datenschutzerklärung' : 'Über AVARE';
+                                return (<Drawer.Item key={item.key} label={label}
+                                    onPress={() => {
+                                        this.props.navigation.navigate(item.routeName);
+                                        this.props.navigation.dispatch(DrawerActions.closeDrawer());
+                                    }} />)
+                            })
+                        }
+                    </Drawer.Section>
+                    <Drawer.Section title="Testscreens">
+                        {
+                            preliminarySection.map((item) => {
+
+                                return (<Drawer.Item key={item.key} label={item.key}
+                                    onPress={() => {
+                                        this.props.navigation.navigate(item.routeName);
+                                        this.props.navigation.dispatch(DrawerActions.closeDrawer());
+                                    }} />)
+                            })
+                        }
+                    </Drawer.Section>
+
+                </SafeAreaView>
+            </ScrollView>
         )
     }
 }

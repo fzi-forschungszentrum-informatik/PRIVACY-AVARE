@@ -31,6 +31,8 @@ import PreferenceStack from './src/views/preferences/PreferenceStack';
 import LoadingScreen from './src/views/welcome/LoadingScreen';
 import WelcomeScreen from './src/views/welcome/WelcomeScreen';
 import ShowJsonFile from './src/views/preliminary/ShowJsonFile';
+import InfoScreen from './src/views/informative/InfoScreen';
+import PrivacyStatement from './src/views/informative/PrivacyStatement';
 import SideBar from './src/views/_shared/SideBar';
 
 //Import Redux and React-Redux
@@ -71,6 +73,12 @@ const MainStack = createDrawerNavigator(
     {
         Home: {
             screen: PreferenceStack
+        },
+        Privacy: {
+            screen: PrivacyStatement
+        },
+        Info: {
+            screen: InfoScreen
         },
         ShowFile: {
             screen: ShowJsonFile
