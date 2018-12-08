@@ -77,21 +77,21 @@ const MainStack = createDrawerNavigator(
         Privacy: {
             screen: PrivacyStatement
         },
-        Info: {
-            screen: InfoScreen
-        },
-        ShowFile: {
-            screen: ShowJsonFile
-        },
-        TestHome: {
-            screen: HomeScreen,
-        },
-        TestItems: {
-            screen: Items,
-        },
-        TestTransfer: {
-            screen: TransferScreen,
-        },
+//        Info: {
+//            screen: InfoScreen
+//        },
+//        ShowFile: {
+//            screen: ShowJsonFile
+//        },
+//        TestHome: {
+//            screen: HomeScreen,
+//        },
+//        TestItems: {
+//            screen: Items,
+//        },
+//        TestTransfer: {
+//            screen: TransferScreen,
+//        },
         AvareBox: {
             screen: AvareBoxStartScreen
         }

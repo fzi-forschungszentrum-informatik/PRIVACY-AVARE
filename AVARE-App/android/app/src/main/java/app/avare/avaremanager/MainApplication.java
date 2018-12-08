@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -53,6 +54,7 @@ public class MainApplication extends Application implements ReactApplication {
         }
     };
 
+
     @Override
     public ReactNativeHost getReactNativeHost() {
         return mReactNativeHost;
@@ -60,6 +62,7 @@ public class MainApplication extends Application implements ReactApplication {
 
     @Override
     public void onCreate() {
+        Log.d("AVARE", "starting up");
         super.onCreate();
         SoLoader.init(this, /* native exopackage */ false);
 

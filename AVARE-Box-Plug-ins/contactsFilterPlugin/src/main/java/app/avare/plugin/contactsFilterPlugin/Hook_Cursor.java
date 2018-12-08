@@ -42,7 +42,7 @@ public class Hook_Cursor {
 
     public static Cursor hook(Object thiz, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
-        Log.i("Hook Cursor", "Uri: " + uri);
+        Log.d("CPLUGIN", "Uri: " + uri);
 
         String[] newProjection;
         if (projection != null) {

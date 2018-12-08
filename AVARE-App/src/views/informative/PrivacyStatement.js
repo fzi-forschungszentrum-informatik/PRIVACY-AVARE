@@ -20,7 +20,8 @@
         limitations under the License.
 */
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
+import Hyperlink from 'react-native-hyperlink';
 import { withTheme, Paragraph, Title } from 'react-native-paper';
 import HomeHeader from '../_shared/HomeHeader';
 
@@ -39,7 +40,7 @@ class PrivacyStatement extends React.Component {
             <HomeHeader />
             <View style={{ padding: 8 }}>
             <Title>Datenschutzerklärung</Title>
-            <Paragraph>Lorem Ipsum</Paragraph>
+            <Hyperlink linkDefault={true}><Text>https://www.privacy-avare.de/datenschutz</Text></Hyperlink>
             </View>
             </View>
 

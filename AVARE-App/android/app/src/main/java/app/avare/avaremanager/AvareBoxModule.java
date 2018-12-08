@@ -22,6 +22,7 @@
 /* TODO: create an NPM module for this functionality*/
 package app.avare.avaremanager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.ApplicationInfo;
@@ -44,13 +45,19 @@ import com.lody.virtual.os.VUserManager;
 import com.lody.virtual.remote.InstallResult;
 import com.lody.virtual.remote.InstalledAppInfo;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.Toast;
 
 import javax.annotation.Nullable;
@@ -64,6 +71,7 @@ import app.avare.avarebox.home.models.PackageAppData;
 import app.avare.avarebox.home.repo.AppRepository;
 import app.avare.avarebox.home.repo.PackageAppDataStorage;
 import app.avare.avarebox.splash.SplashActivity;
+import android.content.res.AssetManager;
 
 public class AvareBoxModule extends ReactContextBaseJavaModule {
 
@@ -79,6 +87,204 @@ public class AvareBoxModule extends ReactContextBaseJavaModule {
     @Override
     public String getName() {
         return "AvareBox";
+    }
+
+    @ReactMethod
+    public void initPlugins() {
+        Toast.makeText(getReactApplicationContext(), "Initialize Plugins", Toast.LENGTH_LONG).show();
+        //Todo: check whether already installed
+        // Copy apks from assets directory to local files directory
+        AssetManager assetManager = MainApplication.getApp().getAssets();
+        String[] files = null;
+        try {
+            files = assetManager.list("plugins");
+        } catch (IOException e) {
+            Log.e("tag", "Failed to get asset file list.", e);
+        }
+        if (files != null) for (String filename : files) {
+            copyPlugin(filename);
+        }
+
+        // get necessary Infos from apks and install as plugins
+        List<PackageInfo> packageList = findAndParseAPKs(this.reactContext, new File("/data/data/app.avare/files"));
+        List<AppInfo> appInfoList = convertPackageInfoToAppData(this.reactContext, packageList, false);
+        for (AppInfo appInfo : appInfoList) {
+            Log.d("AVAREBOX", "add Plugin: " + appInfo.packageName);
+            addPlugin(appInfo);
+        }
+    }
+
+
+    private List<PackageInfo> findAndParseAPKs(Context context, File rootDir) {
+        List<PackageInfo> packageList = new ArrayList<>();
+
+        File[] dirFiles = rootDir.listFiles();
+
+        for (File f : dirFiles) {
+            if (!f.getName().toLowerCase().endsWith(".apk"))
+                continue;
+            PackageInfo pkgInfo = null;
+            try {
+                pkgInfo = context.getPackageManager().getPackageArchiveInfo(
+                        f.getAbsolutePath(), PackageManager.GET_META_DATA);
+                pkgInfo.applicationInfo.sourceDir = f.getAbsolutePath();
+                pkgInfo.applicationInfo.publicSourceDir = f.getAbsolutePath();
+            } catch (Exception e) {
+                // Ignore
+            }
+            if (pkgInfo != null)
+                packageList.add(pkgInfo);
+        }
+
+        return packageList;
+    }
+
+    private List<AppInfo> convertPackageInfoToAppData(Context context, List<PackageInfo> pkgList, boolean fastOpen) {
+        PackageManager pm = context.getPackageManager();
+        List<AppInfo> list = new ArrayList<>(pkgList.size());
+        String hostPkg = VirtualCore.get().getHostPkg();
+        for (PackageInfo pkg : pkgList) {
+            // ignore the host package
+            if (hostPkg.equals(pkg.packageName)) {
+                continue;
+            }
+            // ignore the System package
+            //if (isSystemApplication(pkg)) {
+            //    continue;
+            //}
+            ApplicationInfo ai = pkg.applicationInfo;
+            boolean isHookPlugin = false;
+            if(ai.metaData != null) {
+                isHookPlugin = ai.metaData.getBoolean("yahfa.hook.plugin", false);
+            }
+            String path = ai.publicSourceDir != null ? ai.publicSourceDir : ai.sourceDir;
+            if (path == null) {
+                continue;
+            }
+            AppInfo info = new AppInfo();
+            info.packageName = pkg.packageName;
+            info.fastOpen = fastOpen;
+            info.path = path;
+            info.icon = ai.loadIcon(pm);
+            info.name = ai.loadLabel(pm);
+            info.isHook = isHookPlugin;
+            InstalledAppInfo installedAppInfo = VirtualCore.get().getInstalledAppInfo(pkg.packageName, 0);
+            if (installedAppInfo != null) {
+                if (isHookPlugin) { // do not show hook plugin if already installed
+                    continue;
+                } else {
+                    info.cloneCount = installedAppInfo.getInstalledUsers().length;
+                }
+            }
+            list.add(info);
+        }
+        return list;
+    }
+
+    private void copyPlugin(String filename) {
+        AssetManager assetManager = MainApplication.getApp().getAssets();
+        InputStream in = null;
+        OutputStream out = null;
+
+        try {
+            in = assetManager.open("plugins/" + filename);
+            File outFile = new File("/data/data/app.avare/files", filename);
+            out = new FileOutputStream(outFile);
+            copyFile(in, out);
+        } catch(IOException e) {
+            Log.e("tag", "Failed to copy asset file: " + filename, e);
+        }
+        finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    // NOOP
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    // NOOP
+                }
+            }
+        }
+    }
+    private void copyFile(InputStream in, OutputStream out) throws IOException {
+        byte[] buffer = new byte[1024];
+        int read;
+        while((read = in.read(buffer)) != -1){
+            out.write(buffer, 0, read);
+        }
+    }
+
+    private void addPlugin(AppInfo appInfo) {
+        Toast.makeText(getReactApplicationContext(), "Adding: " + appInfo.packageName, Toast.LENGTH_LONG).show();
+
+
+        //AppInfoLite info = new AppInfoLite("lab.galaxy.contactsFilterPlugin", "/data/data/app.avare/files/contactsFilterPlugin-debug.apk", false, true);
+        AppInfoLite info = new AppInfoLite(appInfo.packageName, appInfo.path, false, true);
+
+
+        class AddResult {
+            private PackageAppData appData;
+            private int userId;
+            private boolean justEnableHidden;
+        }
+        AddResult addResult = new AddResult();
+        VUiKit.defer().when(() -> {
+            InstalledAppInfo installedAppInfo = VirtualCore.get().getInstalledAppInfo(info.packageName, 0);
+            addResult.justEnableHidden = installedAppInfo != null;
+            if (addResult.justEnableHidden && !info.isHook) {
+                int[] userIds = installedAppInfo.getInstalledUsers();
+                int nextUserId = userIds.length;
+
+                for (int i = 0; i < userIds.length; i++) {
+                    if (userIds[i] != i) {
+                        nextUserId = i;
+                        break;
+                    }
+                }
+                addResult.userId = nextUserId;
+
+                if (VUserManager.get().getUserInfo(nextUserId) == null) {
+                    // user not exist, create it automatically.
+                    String nextUserName = "Space " + (nextUserId + 1);
+                    VUserInfo newUserInfo = VUserManager.get().createUser(nextUserName, VUserInfo.FLAG_ADMIN);
+                    if (newUserInfo == null) {
+                        throw new IllegalStateException();
+                    }
+                }
+                boolean success = VirtualCore.get().installPackageAsUser(nextUserId, info.packageName);
+                if (!success) {
+                    throw new IllegalStateException();
+                }
+            } else {
+                InstallResult res = mRepo.addVirtualApp(info);
+                if (!res.isSuccess) {
+                    throw new IllegalStateException();
+                }
+            }
+        }).then((res) -> {
+            addResult.appData = PackageAppDataStorage.get().acquire(info.packageName);
+        }).done(res -> {
+            boolean multipleVersion = addResult.justEnableHidden && addResult.userId != 0;
+            if (!multipleVersion) {
+                PackageAppData data = addResult.appData;
+                data.isLoading = true;
+                //mView.addAppToLauncher(data);
+                handleOptApp(data, info.packageName, true);
+
+
+                addShortcut(data);
+            } else {
+                MultiplePackageAppData data = new MultiplePackageAppData(addResult.appData, addResult.userId);
+                data.isLoading = true;
+                //mView.addAppToLauncher(data);
+                handleOptApp(data, info.packageName, false);
+            }
+        });
     }
 
     @ReactMethod

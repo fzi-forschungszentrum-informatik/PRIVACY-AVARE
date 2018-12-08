@@ -11,7 +11,7 @@ export let settingsSaved = [
     name: 'Kalender',
     description: 'Zugriff auf gespeicherte Kalender und Termine',
     icon: 'event',
-    implemented: true
+    implemented: false
   },
   {
     key: 'storage', // storage in JSON
@@ -34,7 +34,7 @@ export let settingsLive = [
     name: 'Standort',
     description: 'Deinen aktuellen Standort verfolgen.',
     icon: 'location-on',
-    implemented: true,
+    implemented: false,
   },
   {
     key: 'camera', // TODO: camera and mic in JSON

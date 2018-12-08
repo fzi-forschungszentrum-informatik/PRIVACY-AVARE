@@ -1,17 +1,17 @@
 {
   "buildFiles": [
-    "/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Android.mk",
-    "/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Application.mk"
+    "/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Android.mk",
+    "/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Application.mk"
   ],
   "cleanCommands": [
-    "/home/enyone/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/lib clean"
+    "/home/andy/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/lib clean"
   ],
   "libraries": {
     "helloJni-release-armeabi-v7a": {
       "artifactName": "helloJni",
-      "buildCommand": "/home/enyone/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/lib /home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libhelloJni.so",
+      "buildCommand": "/home/andy/Android/Sdk/ndk-bundle/ndk-build NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003d/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Android.mk NDK_APPLICATION_MK\u003d/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/src/main/jni/Application.mk APP_ABI\u003darmeabi-v7a NDK_ALL_ABIS\u003darmeabi-v7a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-21 NDK_OUT\u003d/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003d/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/lib /home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libhelloJni.so",
       "abi": "armeabi-v7a",
-      "output": "/home/enyone/git/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libhelloJni.so"
+      "output": "/home/andy/Workspace/PRIVACY-AVARE/AVARE-Box-Plug-ins/contactsFilterPlugin/build/intermediates/ndkBuild/release/obj/local/armeabi-v7a/libhelloJni.so"
     }
   }
 }
