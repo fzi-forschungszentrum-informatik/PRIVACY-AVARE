@@ -29,7 +29,9 @@ import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import app.avare.lib.configparser.JSONParser;
@@ -69,7 +71,7 @@ public class Hook_Cursor {
             newProjection = null;
         }
 
-        Cursor structuredNameCursor = backup(thiz, ContactsContract.Data.CONTENT_URI, new String[]{ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, ContactsContract.Data.CONTACT_ID}, ContactsContract.Data.MIMETYPE + " = ? AND " + ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME + " != ?", new String[]{ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, "null"}, ContactsContract.Data.CONTACT_ID);
+        Cursor structuredNameCursor = backup(thiz, ContactsContract.Data.CONTENT_URI, new String[]{ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME, ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME, ContactsContract.Data.CONTACT_ID}, ContactsContract.Data.MIMETYPE + " = ? AND " + ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME + " != ?", new String[]{ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE, "null"}, ContactsContract.Data.CONTACT_ID);
 
         //structuredNameCursor.moveToFirst();
         while (structuredNameCursor.moveToNext()) {
@@ -86,11 +88,12 @@ public class Hook_Cursor {
             contactIDKey = ContactsContract.Data.CONTACT_ID;
         }
 
-        String[] newColumns = new String[cursor.getColumnCount() + 1];
+        String[] newColumns = new String[cursor.getColumnCount() + 2];
         for (int i = 0; i < cursor.getColumnCount(); i++) {
             newColumns[i] = cursor.getColumnName(i);
         }
         newColumns[cursor.getColumnCount()] = ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME;
+        newColumns[cursor.getColumnCount() + 1] = ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME;
         MatrixCursor joinedCursor = new MatrixCursor(newColumns);
 
         CursorJoiner joiner = new CursorJoiner(cursor, new String[]{contactIDKey}, structuredNameCursor, new String[]{ContactsContract.Data.CONTACT_ID});
@@ -105,11 +108,13 @@ public class Hook_Cursor {
 
                     break;
                 case BOTH:
-                    Object[] columns = new Object[cursor.getColumnCount() + 1];
+                    Object[] columns = new Object[cursor.getColumnCount() + 2];
                     for (int i = 0; i < cursor.getColumnCount(); i++) {
                         columns[i] = cursor.getString(i);
                     }
                     columns[cursor.getColumnCount()] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
+                    columns[cursor.getColumnCount() + 1] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+
                     joinedCursor.addRow(columns);
                     Log.i("CURSOR JOINER", "both");
                     break;
@@ -146,6 +151,8 @@ public class Hook_Cursor {
         private HookCursor(Cursor c, JSONParser config) {
 
             super(c);
+
+
             this.parser = config;
             this.vertical = this.parser.getContactsSettings("vertical");
             this.horizontal = this.parser.getContactsSettings("horizontal");
@@ -159,17 +166,38 @@ public class Hook_Cursor {
 
         @Override
         public String getString(int columnIndex) {
+            String columnName = super.getColumnName(columnIndex);
+            String status;
+            try {
+                JSONObject jo = this.vertical.getJSONObject(0);
+                status = jo.getString("status");
+                if (status.equalsIgnoreCase("enabled")) {
+                    Log.i("HOOK CURSOR", "filter enabled, skipping custom getString");
+
+                    return super.getString(columnIndex);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String[] mappedColumnNames = mapColumnNames(vertical);
+            String s = "";
+            for (int i = 0; i < mappedColumnNames.length; i++) {
+                s += mappedColumnNames[i] + "\n";
+            }
+            Log.i("MAPPED TABLES", s);
+
             Log.i("HOOK CURSOR", "Calling Cursor getString()");
             try {
-                if (JSONParser.jSONArrayContains(this.vertical, super.getColumnName(columnIndex)) || this.notToFilter.contains(super.getColumnName(columnIndex))) {
-                    Log.i("VERTICAL", "Config contains " + super.getColumnName(columnIndex) + ", returning");
+                if (JSONParser.jSONArrayContains(this.vertical, columnName) || this.stringArrayContains(mappedColumnNames, columnName) || this.notToFilter.contains(columnName)) {
+                    Log.i("VERTICAL", "Config contains " + columnName + ", returning");
                     return super.getString(columnIndex);
                 } else {
-                    Log.i("VERTICAL", "Config doesn't contain " + super.getColumnName(columnIndex) + ", not returning");
+                    Log.i("VERTICAL", "Config doesn't contain " + columnName + ", not returning");
                     if (super.getColumnName(columnIndex).equals(ContactsContract.Contacts.DISPLAY_NAME) || this.notToFilter.contains(super.getColumnName(columnIndex))) {
                         String givenName = super.getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
-                        Log.i("VERTICAL", "Accessing DISPLAY_NAME, returning GIVEN_NAME: " + givenName);
-                        return givenName;
+                        String familyName = super.getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+                        String artificialDisplayName = givenName + " " + familyName;
+                        return getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME)) + " " + getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
                     }
                 }
 
@@ -184,6 +212,17 @@ public class Hook_Cursor {
 
         @Override
         public boolean moveToNext() {
+            String status;
+            try {
+                JSONObject jo = this.horizontal.getJSONObject(0);
+                status = jo.getString("status");
+                if (status.equalsIgnoreCase("enabled")) {
+                    Log.i("HOOK CURSOR", "filter enabled, skipping custom moveToNext()");
+                    return super.moveToNext();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             try {
                 Log.i("HOOK CURSOR", "Using Hook Cursor moveToNext()");
                 boolean next = super.moveToNext();
@@ -215,6 +254,93 @@ public class Hook_Cursor {
                 e.printStackTrace();
                 return this.moveToNext();
             }
+        }
+
+        String[] mapColumnNames(JSONArray preferences) {
+            try {
+                ArrayList<String> mappedPrefs = new ArrayList();
+                for (int i = 0; i < preferences.length(); i++) {
+
+                    String s = getMappedColumnName(preferences.get(i).toString());
+                    if (!s.equals("")) {
+                        mappedPrefs.add(s);
+                    }
+                }
+                String[] mappedPrefsString = new String[mappedPrefs.size()];
+                for (int i = 0; i < mappedPrefsString.length; i++) {
+                    mappedPrefsString[i] = mappedPrefs.get(i);
+                }
+                return mappedPrefsString;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        private String getMappedColumnName(String preference) {
+            switch (preference) {
+                case "FAMILY_NAME":
+                    return ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME;
+
+                case "GIVEN_NAME":
+                    return ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME;
+
+                case "TYPE_BIRTHDAY":
+                    return ContactsContract.CommonDataKinds.Event.START_DATE;
+
+                case "PHOTO":
+                    return ContactsContract.CommonDataKinds.Photo.PHOTO;
+
+                case "ORGANIZATION":
+                    return ContactsContract.CommonDataKinds.Organization.COMPANY;
+
+                case "PHONE.TYPE_MOBILE":
+                    return ContactsContract.CommonDataKinds.Phone.NUMBER;
+
+                case "PHONE.TYPE_HOME":
+                    return ContactsContract.CommonDataKinds.Phone.NUMBER;
+
+                case "PHONE.TYPE_WORK":
+                    return ContactsContract.CommonDataKinds.Phone.NUMBER;
+
+                case "EMAIL.TYPE_HOME":
+                case "EMAIL.TYPE_WORK":
+                    return ContactsContract.CommonDataKinds.Email.ADDRESS;
+
+                case "STREET":
+                    return ContactsContract.CommonDataKinds.StructuredPostal.STREET;
+
+                case "POSTCODE":
+                    return ContactsContract.CommonDataKinds.StructuredPostal.POSTCODE;
+
+                case "CITY":
+                    return ContactsContract.CommonDataKinds.StructuredPostal.CITY;
+
+                case "COUNTRY":
+                    return ContactsContract.CommonDataKinds.StructuredPostal.COUNTRY;
+
+                case "IM.PROTOCOL_SKYPE":
+                case "IM.PROTOCOL_ICQ":
+                    return ContactsContract.CommonDataKinds.Im.DATA;
+
+                case "WEBSITE":
+                    return ContactsContract.CommonDataKinds.Website.URL;
+
+                case "NOTE":
+                    return ContactsContract.CommonDataKinds.Note.NOTE;
+            }
+            return "";
+
+        }
+
+        private boolean stringArrayContains(String[] array, String s) {
+            for (String string : array) {
+                if (s.equalsIgnoreCase(string)) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
