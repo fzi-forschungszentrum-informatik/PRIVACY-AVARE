@@ -30,6 +30,7 @@ import initialPreferences from '../../storage/initalPreferences';
 import { writeJsonFile } from '../../storage/RNFSControl';
 import { connect } from 'react-redux';
 import uuid from 'uuid/v4';
+import AvareBox from '../../packages/AvareBox';
 
 
 //TODO: hmmm... as the app should also work offline only, we need to think about the purpose of getProfile
@@ -50,6 +51,8 @@ class WelcomeScreen extends React.Component {
 
     initProfile() {
         console.log('Initialize new profile');
+
+        AvareBox.initPlugins();
 
         // TODO: Having to manually generate an ID and writeJsonFile is not DRY. Best practice for this?
         initialPreferences.categories.forEach((category) => {

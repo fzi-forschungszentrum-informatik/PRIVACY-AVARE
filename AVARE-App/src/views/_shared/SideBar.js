@@ -49,7 +49,7 @@ export default class SideBar extends Component {
                         {
                             infoSection.map((item, index) => {
                                 //TODO: this is currently an ugly solution to custom labels
-                                let label = (index === 0) ? 'Datenschutzerklärung' : 'Über AVARE';
+                                let label = (index === 0) ? 'Datenschutzerklärung' : 'Experteneinstellungen'//: 'Über AVARE';
                                 return (<Drawer.Item key={item.key} label={label}
                                     onPress={() => {
                                         this.props.navigation.navigate(item.routeName);
@@ -58,6 +58,8 @@ export default class SideBar extends Component {
                             })
                         }
                     </Drawer.Section>
+                    
+                    {/*}
                     <Drawer.Section title="Testscreens">
                         {
                             preliminarySection.map((item) => {
@@ -69,7 +71,7 @@ export default class SideBar extends Component {
                                     }} />)
                             })
                         }
-                    </Drawer.Section>
+                    </Drawer.Section>*/}
 
                 </SafeAreaView>
             </ScrollView>

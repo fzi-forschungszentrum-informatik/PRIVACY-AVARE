@@ -33,7 +33,7 @@ public class JSONParser {
 
     public JSONParser() {
         this.fr = new FileReader();
-        this.config = fr.readFile("avare_demo_config.json");
+        this.config = fr.readFile("preferences.json");
         try {
             this.configJSON = new JSONObject(config);
         } catch (JSONException e) {

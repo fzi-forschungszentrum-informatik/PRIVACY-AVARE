@@ -29,9 +29,11 @@ import java.io.IOException;
 public class FileReader {
 
     public String readFile(String filename) {
-        File sdcard = Environment.getExternalStorageDirectory();
-        Log.i("Contacts Plugin", "current path: " + sdcard.getAbsolutePath());
-        File f = new File(sdcard, filename);
+        //File sdcard = Environment.getExternalStorageDirectory();
+        //Log.i("Contacts Plugin", "current path: " + sdcard.getAbsolutePath());
+        //TODO: this is NOT how one should access the files folder need CONTEXT!
+        File filesDir = new File("/data/data/app.avare/files");
+        File f = new File(filesDir, filename);
 
         StringBuilder sb = new StringBuilder();
 
@@ -44,10 +46,10 @@ public class FileReader {
             }
             br.close();
         } catch (IOException e) {
-            Log.i("Contacts Plugin", "Error while reading from config");
+            Log.d("CPLUGIN", "Error while reading from config");
             e.printStackTrace();
         }
-
+        Log.d("CPLUGIN", "json: " + sb);
         return sb.toString();
     }
 }
