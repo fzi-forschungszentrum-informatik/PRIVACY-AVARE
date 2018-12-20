@@ -33,93 +33,23 @@ public class JSONParser {
 
     public JSONParser() {
         this.fr = new FileReader();
-        this.config = fr.readFile("preferences.json");
+        this.config = fr.readFile("avare_demo_config.json");
         try {
             this.configJSON = new JSONObject(config);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-    }
-
-    private String getPackageName() {
-        Log.i("JSON PARSER", "Trying to get package name..");
-        try {
-            throw new NullPointerException();
-        } catch (NullPointerException e) {
-            StackTraceElement[] stes = e.getStackTrace();
-            for (StackTraceElement ste : stes) {
-                String className = ste.getClassName();
-                int pos = className.lastIndexOf('.');
-                String packageName = className.substring(0, pos);
-                Log.i("JSON PARSER", "packageName: " + packageName);
-                if (!packageName.startsWith("app.avare")) {
-                    Log.i("JSON PARSER", "found package name: " + packageName);
-                    return packageName;
-                }
-            }
-        }
-        return null;
-    }
-
-
-    private JSONObject getSettings(String categoryID) {
-        Log.i("JSON PARSER", "calling getSettings on categoryID " + categoryID);
-        try {
-            JSONArray categories = this.configJSON.getJSONArray("categories");
-            for (int i = 0; i < categories.length(); i++) {
-                JSONObject category = categories.getJSONObject(i);
-                if (category.getString("_id").equals(categoryID)) {
-                    JSONObject categorySettings = category.getJSONObject("settings");
-                    Log.i("JSON PARSER", "Returning settings for category: " + category.getString("_id"));
-                    return categorySettings;
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.i("JSON PARSER", "Cant find settings for category");
-        return null;
     }
 
     private JSONObject getSettings() {
         try {
-            JSONArray apps = this.configJSON.getJSONArray("apps");
-            String packageName = this.getPackageName();
-            for (int i = 0; i < apps.length(); i++) {
-                JSONObject o = apps.getJSONObject(i);
-                String _id = o.getString("_id");
-                if (_id.equalsIgnoreCase(packageName)) {
-                    JSONObject appSettings = o.getJSONObject("settings");
-                    Log.i("JSON PARSER", "returning settings for _id: " + o.get("_id"));
-                    return appSettings;
-                }
-            }
+            JSONArray categories = this.configJSON.getJSONArray("categories");
+            JSONObject category = categories.getJSONObject(0);
+            JSONObject settings = category.getJSONObject("settings");
+            return settings;
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.i("JSON PARSER", "no settings were found");
-        return null;
-    }
-
-    private String getCategoryId() {
-        try {
-            JSONArray apps = this.configJSON.getJSONArray("apps");
-            String packageName = this.getPackageName();
-            for (int i = 0; i < apps.length(); i++) {
-                JSONObject o = apps.getJSONObject(i);
-                String _id = o.getString("_id");
-                if (_id.equalsIgnoreCase(packageName)) {
-                    String category = o.getString("category_id");
-                    Log.i("JSON PARSER", "returning categorySettings for category: " + category);
-                    return category;
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Log.i("JSON PARSER", "no category was found");
         return null;
     }
 
@@ -127,31 +57,7 @@ public class JSONParser {
         try {
             JSONObject settings = this.getSettings();
             JSONObject contacts = settings.getJSONObject("contacts");
-            JSONObject filtersettings = new JSONObject();
-            String status = contacts.getString("status");
-            Log.i("JSON PARSER", "status of contacts setting: " + status);
-            if (status.equalsIgnoreCase("inherit")) {
-                String categoryID = this.getCategoryId();
-                Log.i("JSON PARSER", "inheriting settings from category id: " + categoryID);
-                JSONObject categorySettings = this.getSettings(categoryID);
-                JSONObject categorySettingsContacts = categorySettings.getJSONObject("contacts");
-                filtersettings = categorySettingsContacts.getJSONObject("filterSettings");
-                status = categorySettingsContacts.getString("status");
-            }
-            if (status.equalsIgnoreCase("blocked")) {
-                return new JSONArray();
-            } else if (status.equalsIgnoreCase("filtered")) {
-
-            } else if (status.equalsIgnoreCase("enabled")) {
-                JSONArray array = new JSONArray();
-                JSONObject jo = new JSONObject();
-                jo.put("status", "enabled");
-                array.put(jo);
-                return array;
-
-            }
-
-            Log.i("JSON PARSER", "filter settings: " + filtersettings.toString());
+            JSONObject filtersettings = contacts.getJSONObject("filterSettings");
             if (type.equals("vertical")) {
                 JSONArray vertical = filtersettings.getJSONArray("vertical");
                 return vertical;
@@ -191,10 +97,10 @@ public class JSONParser {
     * Utility function to check whether the JSON Array contains an element or not
     */
     public static boolean jSONArrayContains(JSONArray array, String element) throws JSONException {
-        if (array.length() == 0) {
+        if(array.length() == 0) {
             return false;
         }
-        for (int i = 0; i < array.length(); i++) {
+        for(int i = 0; i < array.length(); i++) {
             if (array.get(i).toString().equals(element)) {
                 return true;
             }
