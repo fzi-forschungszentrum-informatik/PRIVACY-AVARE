@@ -12,8 +12,8 @@ android {
         minSdkVersion 21
         //targetSdkVersion 22
         targetSdkVersion 26
-        versionCode 3
-        versionName "0.0.3"
+        versionCode 4
+        versionName "0.0.4"
         android {
             defaultConfig {
                 ndk {

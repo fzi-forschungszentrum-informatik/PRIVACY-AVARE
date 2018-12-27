@@ -223,7 +223,7 @@ public class AvareBoxModule extends ReactContextBaseJavaModule {
         Toast.makeText(getReactApplicationContext(), "Adding: " + appInfo.packageName, Toast.LENGTH_LONG).show();
 
 
-        //AppInfoLite info = new AppInfoLite("lab.galaxy.contactsFilterPlugin", "/data/data/app.avare/files/contactsFilterPlugin-debug.apk", false, true);
+        //AppInfoLite info = new AppInfoLite("lab.galaxy.contactsFilterPlugin", "/data/data/app.avare/files/..., false, true);
         AppInfoLite info = new AppInfoLite(appInfo.packageName, appInfo.path, false, true);
 
 
