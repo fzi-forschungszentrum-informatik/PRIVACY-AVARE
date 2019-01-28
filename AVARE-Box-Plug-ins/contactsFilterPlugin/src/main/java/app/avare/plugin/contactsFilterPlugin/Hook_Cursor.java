@@ -23,6 +23,8 @@ import android.database.Cursor;
 import android.database.CursorJoiner;
 import android.database.CursorWrapper;
 import android.database.MatrixCursor;
+import android.database.sqlite.SQLiteQuery;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.util.Log;
@@ -42,9 +44,14 @@ public class Hook_Cursor {
     public static String methodName = "query";
     public static String methodSig = "(Landroid/net/Uri;[Ljava/lang/String;Ljava/lang/String;[Ljava/lang/String;Ljava/lang/String;)Landroid/database/Cursor;";
 
+    public static final String AVARE_GIVEN_NAME = "AVARE_GIVEN_NAME";
+    public static final String AVARE_FAMILY_NAME = "AVARE_FAMILY_NAME";
+    public static final String AVARE_CONTACT_ID = "AVARE_CONTACTS_ID";
+
     public static Cursor hook(Object thiz, Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 
         Log.d("CPLUGIN", "Uri: " + uri);
+
 
         String[] newProjection;
         if (projection != null) {
@@ -79,21 +86,51 @@ public class Hook_Cursor {
             Log.i("STRUCTURED NAME CURSOR", "GIVEN_NAME: " + structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME)));
         }
 
-        Cursor cursor = backup(thiz, uri, newProjection, selection, selectionArgs, sortOrder);
+        Cursor cursor;
+        try {
+            cursor = backup(thiz, uri, newProjection, selection, selectionArgs, ContactsContract.Data.CONTACT_ID);
+        } catch (Exception e) {
+            cursor = backup(thiz, uri, newProjection, selection, selectionArgs, sortOrder);
 
-        String contactIDKey;
-        if (cursor.getColumnIndex(ContactsContract.Contacts._ID) != -1) {
-            contactIDKey = ContactsContract.Contacts._ID;
-        } else {
-            contactIDKey = ContactsContract.Data.CONTACT_ID;
         }
 
-        String[] newColumns = new String[cursor.getColumnCount() + 2];
+        //query a joined cursor
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables("original, sName");
+        String originalRaw = builder.buildQuery(newProjection, selection, null, null, sortOrder, null);
+
+
+        String s = "";
+        cursor.moveToFirst();
+        for (int i = 0; i < cursor.getColumnCount(); i++) {
+            s += cursor.getColumnName(i) + ": ";
+            try {
+                s += cursor.getString(i) + "\n";
+            } catch (Exception e) {
+                s += "exception.. \n";
+            }
+        }
+//        Log.i("BACKUP CURSOR content", s);
+//        Log.i("BACKUP CURSOR ROW LEN", cursor.getCount() + "");
+//        Log.i("STRUCT CURSOR ROW LEN", "" + structuredNameCursor.getCount());
+
+
+        String contactIDKey;
+        if (cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID) != -1) {
+            contactIDKey = ContactsContract.Data.CONTACT_ID;
+        } else {
+            contactIDKey = ContactsContract.Contacts._ID;
+        }
+
+        Log.i("HOOK CURSOR", "contactIdKey = " + contactIDKey);
+
+        String[] newColumns = new String[cursor.getColumnCount() + 3];
         for (int i = 0; i < cursor.getColumnCount(); i++) {
             newColumns[i] = cursor.getColumnName(i);
         }
-        newColumns[cursor.getColumnCount()] = ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME;
-        newColumns[cursor.getColumnCount() + 1] = ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME;
+        newColumns[cursor.getColumnCount()] = AVARE_GIVEN_NAME;
+        newColumns[cursor.getColumnCount() + 1] = AVARE_FAMILY_NAME;
+        newColumns[cursor.getColumnCount() + 2] = AVARE_CONTACT_ID;
         MatrixCursor joinedCursor = new MatrixCursor(newColumns);
 
         CursorJoiner joiner = new CursorJoiner(cursor, new String[]{contactIDKey}, structuredNameCursor, new String[]{ContactsContract.Data.CONTACT_ID});
@@ -101,29 +138,168 @@ public class Hook_Cursor {
             switch (res) {
                 case LEFT:
                     Log.i("CURSOR JOINER", "left");
-
-                    break;
-                case RIGHT:
-                    Log.i("CURSOR JOINER", "right");
-
-                    break;
-                case BOTH:
-                    Object[] columns = new Object[cursor.getColumnCount() + 2];
+                    for (int i = 0; i < cursor.getColumnCount(); i++) {
+                        String t = "";
+                        t = cursor.getColumnName(i) + ": ";
+                        try {
+                            t += cursor.getString(i);
+                        } catch (Exception e) {
+                            t += "exception..";
+                        }
+                        Log.i("JOINER cursor", t);
+                    }
+                    for (int i = 0; i < structuredNameCursor.getColumnCount(); i++) {
+                        String t = "";
+                        t = structuredNameCursor.getColumnName(i) + ": ";
+                        try {
+                            t += structuredNameCursor.getString(i);
+                        } catch (Exception e) {
+                            t += "exception..";
+                        }
+                        Log.i("JOINER sCursor", t);
+                    }
+//                    try {
+                    Object[] columns = new Object[cursor.getColumnCount() + 3];
                     for (int i = 0; i < cursor.getColumnCount(); i++) {
                         columns[i] = cursor.getString(i);
                     }
-                    columns[cursor.getColumnCount()] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
-                    columns[cursor.getColumnCount() + 1] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+
+                    columns[cursor.getColumnCount()] = null;
+                    columns[cursor.getColumnCount() + 1] = null;
+                    columns[cursor.getColumnCount() + 2] = null;
+//
+//
+                    joinedCursor.addRow(columns);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+                    break;
+                case RIGHT:
+                    Log.i("CURSOR JOINER", "right");
+                    for (int i = 0; i < cursor.getColumnCount(); i++) {
+                        String t = "";
+                        t = cursor.getColumnName(i) + ": ";
+                        try {
+                            t += cursor.getString(i);
+                        } catch (Exception e) {
+                            t += "exception..";
+                        }
+                        Log.i("JOINER cursor", t);
+                    }
+                    for (int i = 0; i < structuredNameCursor.getColumnCount(); i++) {
+                        String t = "";
+                        t = structuredNameCursor.getColumnName(i) + ": ";
+                        try {
+                            t += structuredNameCursor.getString(i);
+                        } catch (Exception e) {
+                            t += "exception..";
+                        }
+                        Log.i("JOINER sCursor", t);
+                    }
+//                    try {
+//                    columns = new Object[cursor.getColumnCount() + 3];
+//                    for (int i = 0; i < cursor.getColumnCount(); i++) {
+////                            columns[i] = cursor.getString(i);
+//                        columns[i] = null;
+//                    }
+//                        int givenNameIndex = structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME);
+//                        Log.i("GIVEN NAME INDEX", givenNameIndex + "");
+//                        String givenName = structuredNameCursor.getString(givenNameIndex);
+//                        Log.i("GIVEN NAME CONTENT", givenName);
+//                    columns[cursor.getColumnCount()] = columns[cursor.getColumnCount()] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
+//                    columns[cursor.getColumnCount() + 1] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+//                    columns[cursor.getColumnCount() + 2] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.Data.CONTACT_ID));
+//                        columns[cursor.getColumnCount()] = null;
+//                        columns[cursor.getColumnCount() + 1] = null;
+//                        columns[cursor.getColumnCount() + 2] = null;
+//
+//
+//                    joinedCursor.addRow(columns);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//
+                    break;
+                case BOTH:
+                    Log.i("CURSOR JOINER", "both");
+
+                    for (int i = 0; i < cursor.getColumnCount(); i++) {
+                        String t = "";
+                        t = cursor.getColumnName(i) + ": ";
+                        try {
+                            t += cursor.getString(i);
+                        } catch (Exception e) {
+                            t += "exception..";
+                        }
+                        Log.i("JOINER cursor", t);
+                    }
+
+                    for (int i = 0; i < structuredNameCursor.getColumnCount(); i++) {
+                        String t = "";
+                        t = structuredNameCursor.getColumnName(i) + ": ";
+                        try {
+                            t += structuredNameCursor.getString(i);
+                        } catch (Exception e) {
+                            t += "exception..";
+                        }
+                        Log.i("JOINER sCursor", t);
+                    }
+                    Log.i("JOINER divider", "-----------------------------------");
+
+                    columns = new Object[cursor.getColumnCount() + 3];
+                    for (int i = 0; i < cursor.getColumnCount(); i++) {
+                        columns[i] = cursor.getString(i);
+                    }
+                    try {
+                        columns[cursor.getColumnCount()] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
+                        columns[cursor.getColumnCount() + 1] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+                        columns[cursor.getColumnCount() + 2] = structuredNameCursor.getString(structuredNameCursor.getColumnIndex(ContactsContract.Data.CONTACT_ID));
+                    } catch (Exception e) {
+                        columns[cursor.getColumnCount()] = null;
+                        columns[cursor.getColumnCount() + 1] = null;
+                        columns[cursor.getColumnCount() + 2] = null;
+                    }
 
                     joinedCursor.addRow(columns);
-                    Log.i("CURSOR JOINER", "both");
                     break;
             }
         }
 
-        for (int i = 0; i < joinedCursor.getColumnCount(); i++) {
-            Log.i("JOINED CURSOR", joinedCursor.getColumnName(i));
+//        for (int i = 0; i < cursor.getColumnCount(); i++) {
+//            Log.i("ENTRIES cursor", i + ": " + cursor.getColumnName(i));
+//        }
+//
+//        for (int i = 0; i < structuredNameCursor.getColumnCount(); i++) {
+//            Log.i("ENTRIES structuredNameC", i + ": " + structuredNameCursor.getColumnName(i));
+//        }
+//
+//        for (int i = 0; i < joinedCursor.getColumnCount(); i++) {
+//            Log.i("ENTRIES joinedCursor", i + ": " + joinedCursor.getColumnName(i));
+//        }
+
+        //show contents of the joined cursor
+        Log.i("JOINED CURSOR ROW SIZE", joinedCursor.getCount() + "");
+        joinedCursor.moveToFirst();
+        while (!joinedCursor.isAfterLast()) {
+            String t = "";
+
+            for (int i = 0; i < joinedCursor.getColumnCount(); i++) {
+                t += joinedCursor.getColumnName(i) + ": ";
+                try {
+                    t += joinedCursor.getString(i);
+                } catch (Exception e) {
+                    t += "exception..";
+                }
+                t += "\n";
+            }
+            t += "------------------------------------\n";
+            Log.i("JOINED CURSOR CONTENT", t);
+            joinedCursor.moveToNext();
+
         }
+        joinedCursor.moveToFirst();
+        joinedCursor.moveToPrevious();
+
 
         JSONParser jp = new JSONParser();
 
@@ -145,12 +321,26 @@ public class Hook_Cursor {
         JSONArray vertical;
         JSONArray horizontal;
 
-        private String[] notToFilterArray = new String[]{"_id"};
+        private String[] notToFilterArray = new String[]{ContactsContract.Contacts._ID, ContactsContract.Data.CONTACT_ID, ContactsContract.Data.RAW_CONTACT_ID, ContactsContract.Data.SORT_KEY_PRIMARY, AVARE_CONTACT_ID};
         private ArrayList<String> notToFilter = new ArrayList<String>();
 
         private HookCursor(Cursor c, JSONParser config) {
 
             super(c);
+
+            //show the contents of the joined cursor
+//            super.moveToFirst();
+//            String content = "";
+//            for (int i = 0; i < super.getColumnCount(); i++) {
+//                content += super.getColumnName(i) + ": ";
+//                try {
+//                    content += super.getString(i) + "\n";
+//                } catch (Exception e) {
+//                    content += "exception.." + "\n";
+//                }
+//
+//            }
+//            Log.i("JOINED CURSOR CONTENT2", content);
 
 
             this.parser = config;
@@ -172,32 +362,34 @@ public class Hook_Cursor {
                 JSONObject jo = this.vertical.getJSONObject(0);
                 status = jo.getString("status");
                 if (status.equalsIgnoreCase("enabled")) {
-                    Log.i("HOOK CURSOR", "filter enabled, skipping custom getString");
+                    Log.i("HOOK CURSOR", "filter status == \"enabled\", skipping custom getString");
 
                     return super.getString(columnIndex);
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             String[] mappedColumnNames = mapColumnNames(vertical);
             String s = "";
             for (int i = 0; i < mappedColumnNames.length; i++) {
                 s += mappedColumnNames[i] + "\n";
             }
-            Log.i("MAPPED TABLES", s);
+            //Log.i("MAPPED TABLES", s);
 
-            Log.i("HOOK CURSOR", "Calling Cursor getString()");
+//            Log.i("HOOK CURSOR", "Calling Cursor getString()");
             try {
                 if (JSONParser.jSONArrayContains(this.vertical, columnName) || this.stringArrayContains(mappedColumnNames, columnName) || this.notToFilter.contains(columnName)) {
-                    Log.i("VERTICAL", "Config contains " + columnName + ", returning");
+//                    Log.i("VERTICAL", "Config contains " + columnName + ", returning");
                     return super.getString(columnIndex);
                 } else {
-                    Log.i("VERTICAL", "Config doesn't contain " + columnName + ", not returning");
+//                    Log.i("VERTICAL", "Config doesn't contain " + columnName + ", not returning");
                     if (super.getColumnName(columnIndex).equals(ContactsContract.Contacts.DISPLAY_NAME) || this.notToFilter.contains(super.getColumnName(columnIndex))) {
-                        String givenName = super.getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
-                        String familyName = super.getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+//                        String givenName = super.getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME));
+//                        String familyName = super.getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+                        String givenName = super.getString(super.getColumnIndex(AVARE_GIVEN_NAME));
+                        String familyName = super.getString(super.getColumnIndex(AVARE_FAMILY_NAME));
                         String artificialDisplayName = givenName + " " + familyName;
-                        return getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME)) + " " + getString(super.getColumnIndex(ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME));
+                        return getString(super.getColumnIndex(AVARE_GIVEN_NAME)) + " " + getString(super.getColumnIndex(AVARE_FAMILY_NAME));
                     }
                 }
 
@@ -217,11 +409,11 @@ public class Hook_Cursor {
                 JSONObject jo = this.horizontal.getJSONObject(0);
                 status = jo.getString("status");
                 if (status.equalsIgnoreCase("enabled")) {
-                    Log.i("HOOK CURSOR", "filter enabled, skipping custom moveToNext()");
+                    Log.i("HOOK CURSOR", "filter status == \"enabled\", skipping custom moveToNext()");
                     return super.moveToNext();
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             try {
                 Log.i("HOOK CURSOR", "Using Hook Cursor moveToNext()");
@@ -229,11 +421,15 @@ public class Hook_Cursor {
                 if (next) {
                     Log.i("HOOK CURSOR", "Querying ID");
                     for (int i = 0; i < this.getColumnCount(); i++) {
-                        //Log.i("HOOK CURSOR table", this.getColumnName(i) + ": " + this.getString(i));
+                        Log.i("HOOK CURSOR table", this.getColumnName(i) + ": " + this.getString(i));
                     }
                     String currentID = "";
-                    if (this.getColumnIndex(ContactsContract.Data.CONTACT_ID) > -1) {
-                        currentID = this.getString(this.getColumnIndex(ContactsContract.Data.CONTACT_ID));
+                    currentID = this.getString(this.getColumnIndex(AVARE_CONTACT_ID));
+
+                    if (currentID == null || currentID.equals("")) {
+                        if (this.getColumnIndex(ContactsContract.Data.CONTACT_ID) > -1) {
+                            currentID = this.getString(this.getColumnIndex(ContactsContract.Data.CONTACT_ID));
+                        }
                     }
                     if (currentID == null || currentID.equals("")) {
                         currentID = this.getString(this.getColumnIndex(ContactsContract.Contacts._ID));
@@ -281,10 +477,10 @@ public class Hook_Cursor {
         private String getMappedColumnName(String preference) {
             switch (preference) {
                 case "FAMILY_NAME":
-                    return ContactsContract.CommonDataKinds.StructuredName.FAMILY_NAME;
+                    return AVARE_FAMILY_NAME;
 
                 case "GIVEN_NAME":
-                    return ContactsContract.CommonDataKinds.StructuredName.GIVEN_NAME;
+                    return AVARE_GIVEN_NAME;
 
                 case "TYPE_BIRTHDAY":
                     return ContactsContract.CommonDataKinds.Event.START_DATE;

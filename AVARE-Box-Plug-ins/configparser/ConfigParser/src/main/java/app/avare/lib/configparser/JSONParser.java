@@ -54,7 +54,7 @@ public class JSONParser {
                 int pos = className.lastIndexOf('.');
                 String packageName = className.substring(0, pos);
                 Log.i("JSON PARSER", "packageName: " + packageName);
-                if (!packageName.startsWith("app.avare")) {
+                if (!packageName.startsWith("app.avare") && !packageName.startsWith("android")) {
                     Log.i("JSON PARSER", "found package name: " + packageName);
                     return packageName;
                 }
@@ -90,7 +90,7 @@ public class JSONParser {
             for (int i = 0; i < apps.length(); i++) {
                 JSONObject o = apps.getJSONObject(i);
                 String _id = o.getString("_id");
-                if (_id.equalsIgnoreCase(packageName)) {
+                if (_id.equalsIgnoreCase(packageName) || _id.contains(packageName) || packageName.contains(_id)) {
                     JSONObject appSettings = o.getJSONObject("settings");
                     Log.i("JSON PARSER", "returning settings for _id: " + o.get("_id"));
                     return appSettings;
@@ -110,7 +110,7 @@ public class JSONParser {
             for (int i = 0; i < apps.length(); i++) {
                 JSONObject o = apps.getJSONObject(i);
                 String _id = o.getString("_id");
-                if (_id.equalsIgnoreCase(packageName)) {
+                if (_id.equalsIgnoreCase(packageName) || _id.contains(packageName) || packageName.contains(_id)) {
                     String category = o.getString("category_id");
                     Log.i("JSON PARSER", "returning categorySettings for category: " + category);
                     return category;
