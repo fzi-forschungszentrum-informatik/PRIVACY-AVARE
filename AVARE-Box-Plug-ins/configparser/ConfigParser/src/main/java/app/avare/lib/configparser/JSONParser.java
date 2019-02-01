@@ -141,7 +141,7 @@ public class JSONParser {
             if (status.equalsIgnoreCase("blocked")) {
                 return new JSONArray();
             } else if (status.equalsIgnoreCase("filtered")) {
-
+                filtersettings = contacts.getJSONObject("filterSettings");
             } else if (status.equalsIgnoreCase("enabled")) {
                 JSONArray array = new JSONArray();
                 JSONObject jo = new JSONObject();
