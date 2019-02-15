@@ -137,11 +137,13 @@ public class JSONParser {
                 JSONObject categorySettingsContacts = categorySettings.getJSONObject("contacts");
                 filtersettings = categorySettingsContacts.getJSONObject("filterSettings");
                 status = categorySettingsContacts.getString("status");
+            } else {
+                filtersettings = contacts.getJSONObject("filterSettings");
             }
             if (status.equalsIgnoreCase("blocked")) {
                 return new JSONArray();
             } else if (status.equalsIgnoreCase("filtered")) {
-                filtersettings = contacts.getJSONObject("filterSettings");
+//                filtersettings = contacts.getJSONObject("filterSettings");
             } else if (status.equalsIgnoreCase("enabled")) {
                 JSONArray array = new JSONArray();
                 JSONObject jo = new JSONObject();
@@ -188,8 +190,8 @@ public class JSONParser {
     }
 
     /*
-    * Utility function to check whether the JSON Array contains an element or not
-    */
+     * Utility function to check whether the JSON Array contains an element or not
+     */
     public static boolean jSONArrayContains(JSONArray array, String element) throws JSONException {
         if (array.length() == 0) {
             return false;
