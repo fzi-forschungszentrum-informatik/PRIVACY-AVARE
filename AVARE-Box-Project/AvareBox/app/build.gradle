@@ -59,4 +59,5 @@ dependencies {
     // ThirdParty
     implementation 'com.jonathanfinerty.once:once:1.0.3'
     implementation 'com.kyleduo.switchbutton:library:1.4.6'
+    implementation project(':caocLibrary')
 }
