@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "lab.galaxy.contactsFilterPlugin"
         minSdkVersion 21
-        targetSdkVersion 23
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
 
