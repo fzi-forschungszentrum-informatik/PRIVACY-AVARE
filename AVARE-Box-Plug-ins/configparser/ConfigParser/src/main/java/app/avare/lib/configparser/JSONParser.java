@@ -1,4 +1,4 @@
-package de.fzi.zielke.statemachine;
+package app.avare.lib.configparser;
 
 /*
         Copyright 2016-2018 AVARE project team
@@ -24,10 +24,6 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import app.avare.lib.configparser.FileReader;
-import app.avare.lib.configparser.FileWriter;
-
 
 public class JSONParser {
     private FileReader fr;
