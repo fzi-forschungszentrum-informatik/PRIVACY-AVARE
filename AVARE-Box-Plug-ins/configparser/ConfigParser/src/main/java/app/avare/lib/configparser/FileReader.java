@@ -29,11 +29,12 @@ import java.io.IOException;
 public class FileReader {
 
     public String readFile(String filename) {
-        //File sdcard = Environment.getExternalStorageDirectory();
+        File sdcard = Environment.getExternalStorageDirectory();
         //Log.i("Contacts Plugin", "current path: " + sdcard.getAbsolutePath());
         //TODO: this is NOT how one should access the files folder need CONTEXT!
         File filesDir = new File("/data/data/app.avare/files");
-        File f = new File(filesDir, filename);
+        //File f = new File(sdcard, filename);
+        File f = new File( Environment.getExternalStorageDirectory().getAbsolutePath() + "/exampleSettings.json");
 
         StringBuilder sb = new StringBuilder();
 
