@@ -13,10 +13,10 @@ import static app.avare.yahfa.HookInfo.TAG;
 /**
  * Class to write a log entry if camera2 API opens a camera.
  */
-public class Hook_camera2 {
+public class Hook_camera2_1 {
     public static String className = "android.hardware.camera2.CameraManager";
     public static String methodName = "openCamera";
-    public static String methodSig = "(Ljava/lang/String;Landroid/hardware/camera2/CameraDevice$StateCallback;Landroid/os/Handler;)V";
+    public static String methodSig = "(Ljava/lang/String;Ljava/util/concurrent/Executor;Landroid/hardware/camera2/CameraDevice$StateCallback;)V";
 
     private static LogWriter logWriter;
 

@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 /**
- * Class to write the log files to the specified location.
+ * Class to write log entries to benchmarkLog.txt
  */
 public class LogWriter {
 
@@ -30,10 +30,12 @@ public class LogWriter {
         StringBuilder sb = new StringBuilder();
         if (f.exists()) {
             BufferedReader br = null;
+            Log.i("JSON PARSER", f.getAbsolutePath());
             try {
                 br = new BufferedReader(new java.io.FileReader(f));
                 String line;
                 while((line = br.readLine()) != null) {
+                    Log.i("JSON PARSER", line);
                     sb.append(line);
                     sb.append("\n");
                 }
@@ -42,7 +44,6 @@ public class LogWriter {
                 return false;
             }
         }
-
         sb.append(Calendar.getInstance().getTime().toString() + "    " + extractPackage() + "    " + message + "\n");
         try {
             BufferedWriter writer = new BufferedWriter(new java.io.FileWriter(f));
