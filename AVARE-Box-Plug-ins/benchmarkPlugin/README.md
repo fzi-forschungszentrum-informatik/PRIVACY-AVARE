@@ -1,16 +1,26 @@
-VirtualHook demoHookPlugin
---------------------------
+Benchmark Plugin
 
-Here is a demo plugin which contains the hook info. It hooks the following methods:
+The benchmark plugin writes log entries for camera and microphone API calls to the benchmarkLog.txt file.
 
-- AssetManager.open()
-- File()
-- URL.openConnection()
+Usage: 
+1. push the file benchmarkPlugin.apk to your phone
+2. start AVARE Box
+3. Click Add App
+4. install the plugin
+5. start the app you want to monitor via AVARE BOX
+6. read the benchmarkLog.txt
 
-The arguments would be logged and then the original method be called.
+Actual logged APIs:
 
-## Usage
+- Camera 
+- camera2
+- MediaRecorder (https://developer.android.com/reference/android/media/MediaRecorder)
 
-Build the plugin and you'll get an APK file. Push the APK to sdcard, then add the hook and run applications in VirtualHook.
 
-Please take a look at [the demo plugin in YAHFA](https://github.com/rk700/YAHFA/tree/master/demoPlugin) on how to write a hook plugin.
+Example log file:
+
+
+
+
+
+If you have any ideas to improve the plugin, feel free to contact us!
