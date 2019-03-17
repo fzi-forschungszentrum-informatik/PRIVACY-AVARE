@@ -19,8 +19,7 @@ Actual logged APIs:
 
 Example log file:
 
-
-
+![alt text](https://github.com/chritsian/PRIVACY-AVARE/blob/master/AVARE-Box-Plug-ins/benchmarkPlugin/screenshot/screen.PNG)
 
 
 If you have any ideas to improve the plugin, feel free to contact us!
