@@ -21,6 +21,7 @@ public class Hook_Camera_startPreview {
     private static SurfaceHolder holder;
 
     public static void hook(Camera camera, SurfaceHolder holder) {
+        Log.d(TAG, "Start preview hooked");
         stateMachine = new StateMachine();
         holder = Hook_Camera_setPreviewDisplay.getHolder();
         switch (stateMachine.getCameraState()) {

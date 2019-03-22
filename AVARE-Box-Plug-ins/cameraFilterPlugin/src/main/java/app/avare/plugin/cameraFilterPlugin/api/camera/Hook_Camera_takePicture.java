@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 import app.avare.plugin.cameraFilterPlugin.util.ByteCreator;
+import app.avare.plugin.cameraFilterPlugin.util.FaceDetection;
 import app.avare.statemachinelib.StateMachine;
 import app.avare.statemachinelib.enums.CameraState;
 
@@ -12,7 +13,10 @@ import static app.avare.plugin.cameraFilterPlugin.util.ByteCreator.PictureType.B
 import static app.avare.plugin.cameraFilterPlugin.util.ByteCreator.PictureType.COLORED;
 import static app.avare.yahfa.HookInfo.TAG;
 
-
+/**
+ * This method is called if an app desires to get a picture from the camera.
+ * Regarding to the intervention steps the callbacks methods from the calley are called with different data.
+ */
 public class Hook_Camera_takePicture {
 
     public static String className = "android.hardware.Camera";
@@ -43,7 +47,11 @@ public class Hook_Camera_takePicture {
             jpeg.onPictureTaken(byteCreator.getJPEGArray(COLORED), camera);
             return;
         } else if (stateMachine.getCameraState() == CameraState.PIXELED) {
-            backup(camera, shutterCallback, raw, postview, jpeg);
+            FaceDetection faceDetection = new FaceDetection();
+            backup(camera, shutterCallback, raw, postview, faceDetection);
+            while (!faceDetection.isPictureAvailable());
+            jpeg.onPictureTaken(faceDetection.getPixeledPicture(), camera);
+            faceDetection = null;
             return;
         } else if (stateMachine.getCameraState() == CameraState.BLOCKED) {
             return;

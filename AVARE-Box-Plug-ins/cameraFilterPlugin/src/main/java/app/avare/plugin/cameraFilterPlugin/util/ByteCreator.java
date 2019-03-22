@@ -11,6 +11,9 @@ import java.io.ByteArrayOutputStream;
 
 import static app.avare.yahfa.HookInfo.TAG;
 
+/**
+ * This class creates black and colored jpeg pictures in byte array format.
+ */
 public class ByteCreator {
 
     public enum PictureType {

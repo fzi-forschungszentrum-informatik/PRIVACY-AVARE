@@ -17,21 +17,15 @@ public class Hook_Camera_open {
 
     private static StateMachine stateMachine;
 
+    /**
+     * Camera isn't open if user completely block the camera.
+     */
     public static Camera hook(int id) {
         stateMachine = new StateMachine();
         if(stateMachine.getCameraState() == CameraState.BLOCKED) {
             return null;
-        } else {
-            Camera camera =  backup(id);
-            camera.setFaceDetectionListener(new Camera.FaceDetectionListener() {
-                @Override
-                public void onFaceDetection(Camera.Face[] faces, Camera camera) {
-                    Log.d(TAG, "Gesichter erkannt");
-                }
-            });
-            Log.d(TAG, "Listener set");
-            return camera;
         }
+        return backup(id);
     }
 
     public static Camera backup(int id) {
