@@ -1,11 +1,11 @@
 Camera Filter Plugin
 --------------------------
 
-This plugin hooks the Android Camera API. (https://developer.android.com/guide/topics/media/camera)
+This plugin hooks the Android Camera API. (https://developer.android.com/reference/android/hardware/Camera)
 
 It hooks the methods:
 
-- open(int id) 
+- open (int id) 
 - takePicture (Camera.ShutterCallback shutter, Camera.PictureCallback raw, 
     Camera.PictureCallback postview, Camera.PictureCallback jpeg)
 - some preview methods (actually their calls just get logged)
