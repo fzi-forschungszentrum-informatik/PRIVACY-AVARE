@@ -1,16 +1,16 @@
-VirtualHook demoHookPlugin
+Camera Filter Plugin
 --------------------------
 
-Here is a demo plugin which contains the hook info. It hooks the following methods:
+This plugin hooks the Android Camera API. (https://developer.android.com/guide/topics/media/camera)
 
-- AssetManager.open()
-- File()
-- URL.openConnection()
+It hooks the methods:
 
-The arguments would be logged and then the original method be called.
+- open(int id) 
+- takePicture (Camera.ShutterCallback shutter, Camera.PictureCallback raw, 
+    Camera.PictureCallback postview, Camera.PictureCallback jpeg)
+- some preview methods (actually their calls just get logged)
 
-## Usage
 
-Build the plugin and you'll get an APK file. Push the APK to sdcard, then add the hook and run applications in VirtualHook.
+Notice:
 
-Please take a look at [the demo plugin in YAHFA](https://github.com/rk700/YAHFA/tree/master/demoPlugin) on how to write a hook plugin.
+This plugin is just a protoype. For productive use, the Face Detection should be improved and the preview hooks should be fully implemented.
