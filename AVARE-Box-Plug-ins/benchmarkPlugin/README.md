@@ -1,3 +1,6 @@
+Benchmark Plugin
+--------------------------
+
 The benchmark plugin writes log entries for camera and microphone API calls to the benchmarkLog.txt file.
 
 Usage: 
