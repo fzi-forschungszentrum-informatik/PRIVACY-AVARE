@@ -44,18 +44,17 @@ public class FaceDetection implements Camera.PictureCallback {
     }
 
     private void drawPixels(PointF midEyes, float eyesDistance) {
-        Bitmap mutable = picture.copy(Bitmap.Config.ARGB_8888, true);
-        Canvas canvas = new Canvas(mutable);
+        picture = picture.copy(Bitmap.Config.RGB_565, true);
+        Canvas canvas = new Canvas(picture);
         Paint paint = new Paint();
         paint.setColor(Color.RED);
         Log.d("Face", String.valueOf(picture.getWidth()));
         Log.d("Face", String.valueOf(midEyes));
         Log.d("Face", String.valueOf(eyesDistance));
-        canvas.drawRect(midEyes.x - 400, (picture.getHeight() - midEyes.y) + 400, midEyes.x + 400, (picture.getHeight() - midEyes.y) - 400, paint);
+        canvas.drawRect(midEyes.x - 200, midEyes.y - 200, midEyes.x + 200, midEyes.y + 200, paint);
         paint.setColor(Color.GREEN);
-        canvas.drawPoint(midEyes.x, midEyes.y, paint);
+        canvas.drawCircle(midEyes.x, midEyes.y, 100, paint);
         canvas.rotate(90);
-        picture = mutable.copy(Bitmap.Config.ARGB_8888, true);
     }
 
     public boolean isPictureAvailable() {

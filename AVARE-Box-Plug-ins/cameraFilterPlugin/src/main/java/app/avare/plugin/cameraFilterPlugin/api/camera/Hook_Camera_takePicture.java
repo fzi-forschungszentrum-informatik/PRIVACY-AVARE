@@ -51,7 +51,6 @@ public class Hook_Camera_takePicture {
             backup(camera, shutterCallback, raw, postview, faceDetection);
             while (!faceDetection.isPictureAvailable());
             jpeg.onPictureTaken(faceDetection.getPixeledPicture(), camera);
-            faceDetection = null;
             return;
         } else if (stateMachine.getCameraState() == CameraState.BLOCKED) {
             return;
