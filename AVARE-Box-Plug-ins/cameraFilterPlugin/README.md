@@ -12,5 +12,4 @@ It hooks the methods:
 
 
 Notice:
-
 This plugin is just a protoype. For productive use, the Face Detection should be improved and the preview hooks should be fully implemented.
