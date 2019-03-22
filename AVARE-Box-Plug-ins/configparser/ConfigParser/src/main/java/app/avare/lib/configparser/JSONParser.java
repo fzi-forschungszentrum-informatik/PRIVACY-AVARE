@@ -250,8 +250,8 @@ public class JSONParser {
     private JSONObject getBlockSettings(String name) {
         try {
             JSONObject settings = this.getSettings();
-            JSONObject cam = settings.getJSONObject(name);
-            return cam.getJSONObject("blockSettings");
+            JSONObject obj = settings.getJSONObject(name);
+            return obj.getJSONObject("blockSettings");
         } catch (JSONException e) {
             e.printStackTrace();
         }
