@@ -5,9 +5,11 @@ import app.avare.plugin.benchmarkPlugin.Hook_Camera;
 import app.avare.plugin.benchmarkPlugin.Hook_MediaRecorder;
 import app.avare.plugin.benchmarkPlugin.Hook_MediaRecorder_1;
 import app.avare.plugin.benchmarkPlugin.Hook_MediaRecorder_2;
+import app.avare.plugin.benchmarkPlugin.Hook_MediaRecorder_3;
 import app.avare.plugin.benchmarkPlugin.Hook_camera2;
 import app.avare.plugin.benchmarkPlugin.Hook_MediaCodec;
 import app.avare.plugin.benchmarkPlugin.Hook_AudioRecord;
+import app.avare.plugin.benchmarkPlugin.Hook_camera2_1;
 
 /**
  * Created by liuruikai756 on 31/03/2017.
@@ -25,7 +27,9 @@ public class HookInfo {
             Hook_MediaRecorder.class.getName(),
             Hook_MediaRecorder_1.class.getName(),
             Hook_MediaRecorder_2.class.getName(),
+            Hook_MediaRecorder_3.class.getName(),
             Hook_camera2.class.getName(),
+            Hook_camera2_1.class.getName(),
             Hook_Camera.class.getName(),
             Hook_MediaCodec.class.getName(),
             Hook_AudioRecord.class.getName(),

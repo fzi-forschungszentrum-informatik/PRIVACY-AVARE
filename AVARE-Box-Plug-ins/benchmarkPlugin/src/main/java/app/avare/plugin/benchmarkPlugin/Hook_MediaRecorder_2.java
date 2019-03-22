@@ -18,7 +18,7 @@ public class Hook_MediaRecorder_2 {
     private static LogWriter logWriter;
 
     public static void hook(MediaRecorder thiz) {
-        Log.d(TAG, "MediaRecorder hooked");
+        Log.d(TAG, "MediaRecorder setCamera hooked");
         logWriter = new LogWriter();
         logWriter.addLine("MediaRecorder called - Video source set");
         backup(thiz);

@@ -8,7 +8,7 @@ import app.avare.plugin.benchmarkFileWriter.LogWriter;
 import static app.avare.yahfa.HookInfo.TAG;
 
 /**
- * Class to write a log entry if Camera API opens a camera.
+ * Class to write a log entry if CameraOP API opens a camera.
  */
 public class Hook_Camera {
     public static String className = "android.hardware.Camera";
