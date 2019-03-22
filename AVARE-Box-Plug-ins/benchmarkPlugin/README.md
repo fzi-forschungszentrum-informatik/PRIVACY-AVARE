@@ -18,7 +18,9 @@ Actual logged APIs:
 - Camera (https://developer.android.com/guide/topics/media/camera)
 - camera2 (https://developer.android.com/reference/android/hardware/camera2/package-summary)
 - MediaRecorder (https://developer.android.com/reference/android/media/MediaRecorder)
-
+- AudioRecord (https://developer.android.com/reference/android/media/AudioRecord)
+- MediaCodec (https://developer.android.com/reference/android/media/MediaCodec)
+- AudioGroup (https://developer.android.com/reference/android/net/rtp/AudioGroup)
 
 Example log file:
 
