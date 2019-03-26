@@ -1,9 +1,9 @@
-package app.avare.plugin.benchmarkPlugin;
+package app.avare.plugin.apiLogPlugin;
 
 import android.media.AudioRecord;
 import android.util.Log;
 
-import app.avare.plugin.benchmarkFileWriter.LogWriter;
+import app.avare.plugin.apiLogFileWriter.LogWriter;
 
 import static app.avare.yahfa.HookInfo.TAG;
 

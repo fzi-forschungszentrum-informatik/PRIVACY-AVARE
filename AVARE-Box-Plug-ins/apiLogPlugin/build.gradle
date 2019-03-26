@@ -14,7 +14,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion "28.0.3"
     defaultConfig {
-        applicationId "lab.galaxy.benchmarkPlugin"
+        applicationId "app.avare.apiLogPlugin"
         minSdkVersion 23
         targetSdkVersion 26
         versionCode 1

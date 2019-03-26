@@ -1,9 +1,10 @@
-package app.avare.plugin.benchmarkPlugin;
+package app.avare.plugin.apiLogPlugin;
 
 import android.media.AudioRecord;
+import android.media.MediaSyncEvent;
 import android.util.Log;
 
-import app.avare.plugin.benchmarkFileWriter.LogWriter;
+import app.avare.plugin.apiLogFileWriter.LogWriter;
 
 import static app.avare.yahfa.HookInfo.TAG;
 
@@ -17,15 +18,15 @@ public class Hook_AudioRecord_1 {
 
     private static LogWriter logWriter;
 
-    public static void hook(AudioRecord thiz) {
+    public static void hook(AudioRecord thiz, MediaSyncEvent mediaSyncEvent) {
         Log.d(TAG, "AudioRecord hooked");
         logWriter = new LogWriter();
         logWriter.addLine("AudioRecord called");
-        backup(thiz);
+        backup(thiz, mediaSyncEvent);
 
     }
 
-    public static void backup(AudioRecord thiz) {
+    public static void backup(AudioRecord thiz, MediaSyncEvent mediaSyncEvent) {
 
     }
 }

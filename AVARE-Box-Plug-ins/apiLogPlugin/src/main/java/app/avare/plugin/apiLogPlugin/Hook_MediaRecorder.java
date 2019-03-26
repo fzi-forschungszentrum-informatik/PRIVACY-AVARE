@@ -1,9 +1,9 @@
-package app.avare.plugin.benchmarkPlugin;
+package app.avare.plugin.apiLogPlugin;
 
 import android.media.MediaRecorder;
 import android.util.Log;
 
-import app.avare.plugin.benchmarkFileWriter.LogWriter;
+import app.avare.plugin.apiLogFileWriter.LogWriter;
 
 import static app.avare.yahfa.HookInfo.TAG;
 
@@ -17,14 +17,14 @@ public class Hook_MediaRecorder {
 
     private static LogWriter logWriter;
 
-    public static void hook(MediaRecorder thiz) {
+    public static void hook(MediaRecorder thiz, int i) {
         Log.d(TAG, "MediaRecorder setAudioSource hooked");
         logWriter = new LogWriter();
         logWriter.addLine("MediaRecorder called - Audio source set");
-        backup(thiz);
+        backup(thiz, i);
     }
 
-    public static void backup(MediaRecorder thiz) {
-        thiz.start();
+    public static void backup(MediaRecorder thiz, int i) {
+        thiz.setAudioSource(i);
     }
 }
