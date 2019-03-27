@@ -26,3 +26,8 @@ Example log file:
 
 
 If you have any ideas to improve the plugin, feel free to contact us!
+
+
+## License
+
+AVARE BOX PROJECT (as a part of the AVARE PROJECT) is distributed under GNU GPL V3.
