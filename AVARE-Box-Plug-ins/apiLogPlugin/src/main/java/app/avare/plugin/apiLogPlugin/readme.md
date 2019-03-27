@@ -5,7 +5,7 @@
 
 YAHFA specific syntax for method parameters: 
 
-L class/interface  e.g. L/java/lang/String;
-$ for nested classes and interfaces 
+#L class/interface  e.g. L/java/lang/String;
+#$ for nested classes and interfaces 
 I Integer
 V void
