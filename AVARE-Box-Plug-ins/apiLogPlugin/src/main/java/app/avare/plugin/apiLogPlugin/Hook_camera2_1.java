@@ -4,7 +4,7 @@ import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
 import android.util.Log;
 
-import java.util.logging.Handler;
+import java.util.concurrent.Executor;
 
 import app.avare.plugin.apiLogFileWriter.LogWriter;
 
@@ -20,14 +20,14 @@ public class Hook_camera2_1 {
 
     private static LogWriter logWriter;
 
-    public static void hook(CameraManager thiz, String s, CameraDevice.StateCallback stateCallback, Handler handler) {
+    public static void hook(CameraManager thiz, String s, Executor executor, CameraDevice.StateCallback stateCallback) {
         Log.d(TAG, "camera2 hooked");
         logWriter = new LogWriter();
         logWriter.addLine("camera2 called");
-        backup(thiz, s, stateCallback, handler);
+        backup(thiz, s, executor, stateCallback);
     }
 
-    public static void backup(CameraManager thiz, String s, CameraDevice.StateCallback stateCallback, Handler handler) {
+    public static void backup(CameraManager thiz, String s, Executor executor, CameraDevice.StateCallback stateCallback) {
 
     }
 }

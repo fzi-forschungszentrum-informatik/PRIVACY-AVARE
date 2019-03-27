@@ -2,16 +2,15 @@ package app.avare.plugin.apiLogPlugin;
 
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
+import android.os.Handler;
 import android.util.Log;
-
-import java.util.logging.Handler;
 
 import app.avare.plugin.apiLogFileWriter.LogWriter;
 
 import static app.avare.yahfa.HookInfo.TAG;
 
 /**
- * Class to write a log entry if camera2 API opens a camera.
+ * Class to write a log entry if camera2 API opens a camera. This method is available from API Level 28
  */
 public class Hook_camera2 {
     public static String className = "android.hardware.camera2.CameraManager";

@@ -8,7 +8,7 @@ import app.avare.plugin.apiLogFileWriter.LogWriter;
 import static app.avare.yahfa.HookInfo.TAG;
 
 /**
- * Class to write a log entry if MediaRecorder is prepared to record audio.
+ * Class to write a log entry if MediaRecorder is prepared to record video.
  */
 public class Hook_MediaRecorder_1 {
     public static String className = "android.media.MediaRecorder";
