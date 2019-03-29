@@ -8,7 +8,7 @@ It hooks the methods:
 - open (int id) 
 - takePicture (Camera.ShutterCallback shutter, Camera.PictureCallback raw, 
     Camera.PictureCallback postview, Camera.PictureCallback jpeg)
-- some preview methods (actually their calls just get logged)
+- some preview methods (actually their calls just can be logged)
 
 
 Notice:
