@@ -8,7 +8,9 @@ import app.avare.statemachinelib.enums.CameraState;
 
 import static app.avare.yahfa.HookInfo.TAG;
 
-
+/**
+ * Hooks the camera open method.
+ */
 public class Hook_Camera_open {
 
     public static String className = "android.hardware.Camera";
@@ -18,7 +20,7 @@ public class Hook_Camera_open {
     private static StateMachine stateMachine;
 
     /**
-     * Camera isn't open if user completely block the camera.
+     * Camera will not open if user completely block the camera.
      */
     public static Camera hook(int id) {
         stateMachine = new StateMachine();

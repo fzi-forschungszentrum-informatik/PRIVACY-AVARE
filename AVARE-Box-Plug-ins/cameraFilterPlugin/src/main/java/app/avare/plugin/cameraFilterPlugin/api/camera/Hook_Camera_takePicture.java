@@ -15,7 +15,7 @@ import static app.avare.yahfa.HookInfo.TAG;
 
 /**
  * This method is called if an app desires to get a picture from the camera.
- * Regarding to the intervention steps the callbacks methods from the calley are called with different data.
+ * Regarding to the intervention steps the callbacks methods from the callee are called with different data.
  */
 public class Hook_Camera_takePicture {
 
@@ -36,19 +36,16 @@ public class Hook_Camera_takePicture {
             return;
         } else if (stateMachine.getCameraState() == CameraState.BLACK_PICTURE) {
             shutterCallback.onShutter();
-          //  raw.onPictureTaken(byteCreator.getRawArray(200, 200, COLORED), camera);
-         //   postview.onPictureTaken(byteCreator.getPostViewArray(200, 200, COLORED), camera);
             jpeg.onPictureTaken(byteCreator.getJPEGArray(BLACK), camera);
             return;
         } else if (stateMachine.getCameraState() == CameraState.NEUTRAL_PICTURE) {
             shutterCallback.onShutter();
-            //  raw.onPictureTaken(byteCreator.getRawArray(200, 200, COLORED), camera);
-            //   postview.onPictureTaken(byteCreator.getPostViewArray(200, 200, COLORED), camera);
             jpeg.onPictureTaken(byteCreator.getJPEGArray(COLORED), camera);
             return;
         } else if (stateMachine.getCameraState() == CameraState.PIXELED) {
             FaceDetection faceDetection = new FaceDetection();
             backup(camera, shutterCallback, raw, postview, faceDetection);
+            //Busy waiting, think about better solutions...
             while (!faceDetection.isPictureAvailable());
             jpeg.onPictureTaken(faceDetection.getPixeledPicture(), camera);
             return;

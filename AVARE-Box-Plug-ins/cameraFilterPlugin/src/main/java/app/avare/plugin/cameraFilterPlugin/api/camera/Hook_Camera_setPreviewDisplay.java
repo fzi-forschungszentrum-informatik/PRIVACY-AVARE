@@ -76,6 +76,7 @@ public class Hook_Camera_setPreviewDisplay {
                 holder.setKeepScreenOn(screenOn);
             }
 
+            //doesn't work actually, because method isn't called
             @Override
             public Canvas lockCanvas() {
                 Log.d(TAG, "Holder lockCanvas hooked");
