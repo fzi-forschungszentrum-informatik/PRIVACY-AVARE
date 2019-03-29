@@ -19,11 +19,10 @@ Actual logged APIs:
 - camera2 (https://developer.android.com/reference/android/hardware/camera2/package-summary)
 - MediaRecorder (https://developer.android.com/reference/android/media/MediaRecorder)
 - AudioRecord (https://developer.android.com/reference/android/media/AudioRecord)
-
+- If you want to log other methods, take a look at the Hook_Demo.java file.
 Example log file:
 
 ![alt text](https://github.com/chritsian/PRIVACY-AVARE/blob/master/AVARE-Box-Plug-ins/apiLogPlugin/screenshot/screen.PNG)
-
 
 If you have any ideas to improve the plugin, feel free to contact us!
 
