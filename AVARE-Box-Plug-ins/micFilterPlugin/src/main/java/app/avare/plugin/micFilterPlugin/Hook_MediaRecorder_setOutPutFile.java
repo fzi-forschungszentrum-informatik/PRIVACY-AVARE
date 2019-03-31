@@ -6,7 +6,9 @@ import android.util.Log;
 import static app.avare.yahfa.HookInfo.TAG;
 
 
-
+/**
+ * Saves the file path where a user wants to save an audio/video file.
+ */
 
 public class Hook_MediaRecorder_setOutPutFile {
     public static String className = "android.media.MediaRecorder";
@@ -17,7 +19,7 @@ public class Hook_MediaRecorder_setOutPutFile {
 
     public static void hook(MediaRecorder thiz, String path) {
         filePath = path;
-        Log.d(TAG, "blablabal"+filePath);
+        Log.d(TAG, filePath);
         backup(thiz, path);
 
     }

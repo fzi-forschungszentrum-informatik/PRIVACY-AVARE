@@ -14,6 +14,9 @@ import app.avare.statemachinelib.StateMachine;
 
 import static app.avare.yahfa.HookInfo.TAG;
 
+/**
+ * hooks the start recording with the desired privacy option
+ */
 
 public class Hook_MediaRecorder_start {
     public static String className = "android.media.MediaRecorder";
@@ -23,44 +26,31 @@ public class Hook_MediaRecorder_start {
     private static StateMachine stateMachine;
 
     public static void hook(MediaRecorder thiz) {
-
-        Log.d(TAG, "new");
-        try {
-
-            stateMachine = new StateMachine();
-        } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
-        }
-
-        Log.d(TAG, "new");
-        Log.d(TAG, stateMachine.getMicrophoneState().toString());
-        Log.d(TAG, stateMachine.getCameraState().toString());
-
-        stateMachine.nextMicrophoneState();
-        Log.d(TAG, stateMachine.getMicrophoneState().toString());
-
         stateMachine = new StateMachine();
         Log.d(TAG, stateMachine.getMicrophoneState().toString());
+        switch (stateMachine.getMicrophoneState()) {
+            case BLOCKED:
+                thiz.reset();
+                break;
+            case NO_SOUND:
+                thiz.reset();
+                //writeSoundFile("silence.wav");
+                break;
+            case NEUTRAL_SOUND:
+                thiz.reset();
+                //writeSoundFile("swoosh");
+                break;
+            case ENABLED:
+                backup(thiz);
+                break;
+        }
     }
 
-    private static void filter() {
-       switch (stateMachine.getMicrophoneState()) {
-           case BLOCKED:
-               break;
-           case NO_SOUND:
-               writeSoundFile("silence.wav");
-               break;
-           case NEUTRAL_SOUND:
-               writeSoundFile("swoosh");
-               break;
-       }
-    }
-
+    //doesn't work as assumed
     private static void writeSoundFile(String soundPath) {
         Log.d(TAG,"start write sound file");
         File f = new File(soundPath);
-        Log.d(TAG, String.valueOf(f != null));
-        Log.d(TAG, String.valueOf(f.canRead()));
+
         InputStream in = Hook_MediaRecorder_start.class.getClassLoader().getResourceAsStream("swoosh.wav");
 
   /*      try {
