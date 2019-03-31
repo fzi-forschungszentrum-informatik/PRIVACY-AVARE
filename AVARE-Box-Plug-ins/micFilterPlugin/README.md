@@ -1,4 +1,4 @@
-VirtualHook demoHookPlugin
+MicFilterPlugin
 --------------------------
 
 Here is a demo plugin which contains the hook info. It hooks the following methods:
