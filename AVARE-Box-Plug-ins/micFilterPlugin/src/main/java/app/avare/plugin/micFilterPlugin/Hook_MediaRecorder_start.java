@@ -30,14 +30,11 @@ public class Hook_MediaRecorder_start {
         Log.d(TAG, stateMachine.getMicrophoneState().toString());
         switch (stateMachine.getMicrophoneState()) {
             case BLOCKED:
-                thiz.reset();
                 break;
             case NO_SOUND:
-                thiz.reset();
                 //writeSoundFile("silence.wav");
                 break;
             case NEUTRAL_SOUND:
-                thiz.reset();
                 //writeSoundFile("swoosh");
                 break;
             case ENABLED:

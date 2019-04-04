@@ -21,6 +21,8 @@ public class Hook_MediaRecorder_stop {
 
         if (stateMachine.getMicrophoneState().equals(MicrophoneState.ENABLED)) {
             backup(thiz);
+        } else {
+            thiz.reset();
         }
 
     }
