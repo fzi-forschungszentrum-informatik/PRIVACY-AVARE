@@ -14,13 +14,13 @@ import static app.avare.yahfa.HookInfo.TAG;
 public class Hook_Camera_startPreview {
 
     public static String className = "android.hardware.Camera";
-    public static String methodName = "setPreviewDisplay";
-    public static String methodSig = "(Landroid/view/SurfaceHolder.class;)V";
+    public static String methodName = "startPreview";
+    public static String methodSig = "()V";
 
     private static StateMachine stateMachine;
     private static SurfaceHolder holder;
 
-    public static void hook(Camera camera, SurfaceHolder holder) {
+    public static void hook(Camera camera) {
         Log.d(TAG, "Start preview hooked");
         stateMachine = new StateMachine();
         holder = Hook_Camera_setPreviewDisplay.getHolder();
@@ -33,7 +33,7 @@ public class Hook_Camera_startPreview {
                 break;
             case PIXELED: pixelPicture();
                 break;
-            case ENABLED: backup(camera, holder);
+            case ENABLED: backup(camera);
                 break;
         }
     }
@@ -57,6 +57,6 @@ public class Hook_Camera_startPreview {
 
     }
 
-    public static void backup(Camera camera, SurfaceHolder holder) {
+    public static void backup(Camera camera) {
     }
 }
