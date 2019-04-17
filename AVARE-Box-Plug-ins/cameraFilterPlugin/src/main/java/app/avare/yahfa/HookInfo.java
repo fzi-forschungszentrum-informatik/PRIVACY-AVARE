@@ -23,7 +23,7 @@ public class HookInfo {
             Hook_Camera_open.class.getName(),
             //if the preview hooks work fine, uncomment this section
             // Hook_Camera_setPreviewDisplay.class.getName(),
-            //Hook_Camera_startPreview.class.getName(),
+            // Hook_Camera_startPreview.class.getName(),
             // Hook_Camera_setPreviewTexture.class.getName(),
             // Hook_Camera_setPreviewCallback.class.getName(),
             Hook_Camera_takePicture.class.getName()
