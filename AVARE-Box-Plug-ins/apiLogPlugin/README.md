@@ -26,8 +26,3 @@ Example log file:
 ![alt text](https://github.com/chritsian/PRIVACY-AVARE/blob/master/AVARE-Box-Plug-ins/apiLogPlugin/screenshot/screen.PNG)
 
 If you have any ideas to improve the plugin, feel free to contact us!
-
-
-## License
-
-AVARE BOX PROJECT (as a part of the AVARE PROJECT) is distributed under GNU GPL V3.
