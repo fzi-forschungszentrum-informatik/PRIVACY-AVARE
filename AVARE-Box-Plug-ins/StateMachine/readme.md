@@ -1,4 +1,4 @@
-This library can be added to plugins which want to interact with camera and microfone. Following methods are offered:
+This library can be added to plugins which want to interact with camera and microphone. Following methods are offered:
 - getCameraState()
 - getMicrophoneState()
 - nextCameraState()
