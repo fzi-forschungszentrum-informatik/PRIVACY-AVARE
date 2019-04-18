@@ -8,7 +8,7 @@ Usage:
 2. start AVARE Box
 3. click 'Add App'
 4. install the plugin
-5. start the app you want to monitor via AVARE BOX
+5. start the app you want to monitor (via AVARE BOX)
 6. read the apiLog.txt
 
 If you want to reset the log file just delete it. A new file is created automatically.
