@@ -1,4 +1,4 @@
-Camera Filter Plugin
+cameraFilterPlugin
 --------------------------
 
 This plugin hooks the Android Camera API. (https://developer.android.com/reference/android/hardware/Camera)
