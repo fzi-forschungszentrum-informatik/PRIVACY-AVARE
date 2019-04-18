@@ -1,7 +1,7 @@
 package app.avare.lib.configparser;
 
 /*
-        Copyright 2016-2018 AVARE project team
+        Copyright 2016-2019 AVARE project team
 
         AVARE-Project was financed by the Baden-Württemberg Stiftung gGmbH (www.bwstiftung.de).
         Project partners are FZI Forschungszentrum Informatik am Karlsruher

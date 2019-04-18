@@ -14,10 +14,6 @@ import static app.avare.plugin.cameraFilterPlugin.util.ByteCreator.PictureType.C
 import static app.avare.yahfa.HookInfo.TAG;
 
 /*
- * Created by AVARE Project
- */
-
-/*
         Copyright 2016-2019 AVARE project team
         AVARE-Project was financed by the Baden-Württemberg Stiftung gGmbH (www.bwstiftung.de).
         Project partners are FZI Forschungszentrum Informatik am Karlsruher
