@@ -1,7 +1,7 @@
 cameraFilterPlugin
 --------------------------
 
-This plugin hooks the Android Camera API. (https://developer.android.com/reference/android/hardware/Camera)
+This plug-in hooks the Android Camera API. (https://developer.android.com/reference/android/hardware/Camera)
 
 It hooks the methods:
 
@@ -12,4 +12,4 @@ It hooks the methods:
 
 
 Notice:
-This plugin is just a protoype. For productive use, the Face Detection should be improved and the preview hooks should be fully implemented otherwise apps can use this backdoor to access the camera.
+This plug-in is just a protoype. For productive use, the Face Detection should be improved and the preview hooks should be fully implemented otherwise apps can use this backdoor to access the camera.
