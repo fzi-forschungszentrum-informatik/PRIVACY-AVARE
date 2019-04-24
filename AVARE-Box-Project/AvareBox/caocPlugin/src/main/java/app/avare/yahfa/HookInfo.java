@@ -4,7 +4,7 @@ import app.avare.plugin.caocPlugin.Hook_Activity_onCreate;
 
 /**
  * Created by liuruikai756 on 31/03/2017.
- * Edited by AVARE Project 2019/03/26
+ * Edited by AVARE Project 2019/04/24
  */
 
 public class HookInfo {
