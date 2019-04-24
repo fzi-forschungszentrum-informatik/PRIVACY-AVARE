@@ -86,6 +86,7 @@ public final class CustomActivityOnCrash {
      */
     @RestrictTo(RestrictTo.Scope.LIBRARY)
     public static void install(@Nullable final Context context) {
+        Log.d(TAG, "Install called");
         try {
             if (context == null) {
                 Log.e(TAG, "Install failed: context is null!");
@@ -106,6 +107,7 @@ public final class CustomActivityOnCrash {
                     Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
                         @Override
                         public void uncaughtException(Thread thread, final Throwable throwable) {
+                            Log.d(TAG, "called");
                             if (config.isEnabled()) {
                                 Log.e(TAG, "App has crashed, executing CustomActivityOnCrash's UncaughtExceptionHandler", throwable);
 
@@ -146,7 +148,12 @@ public final class CustomActivityOnCrash {
                                             String disclaimer = " [stack trace too large]";
                                             stackTraceString = stackTraceString.substring(0, MAX_STACK_TRACE_SIZE - disclaimer.length()) + disclaimer;
                                         }
-                                        intent.putExtra(EXTRA_STACK_TRACE, stackTraceString);
+
+
+                                        //here the StackTrace Analysis takes place
+                                        CheckHookError c = new CheckHookError();
+
+                                        intent.putExtra(EXTRA_STACK_TRACE, c.run(stackTraceString));
 
                                         if (config.isTrackActivities()) {
                                             StringBuilder activityLogStringBuilder = new StringBuilder();
@@ -167,6 +174,7 @@ public final class CustomActivityOnCrash {
                                         if (config.getEventListener() != null) {
                                             config.getEventListener().onLaunchErrorActivity();
                                         }
+                                        Log.d(TAG, "executed");
                                         application.startActivity(intent);
                                     } else if (config.getBackgroundMode() == CaocConfig.BACKGROUND_MODE_CRASH) {
                                         if (oldHandler != null) {

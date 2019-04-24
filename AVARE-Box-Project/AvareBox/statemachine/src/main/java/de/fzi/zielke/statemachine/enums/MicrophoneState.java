@@ -1,8 +1,15 @@
 package de.fzi.zielke.statemachine.enums;
 
 /**
- * Represents the different intervention steps for audio recording.
+ *  Represents the different privacy steps for microphone access.
  */
 public enum MicrophoneState {
-    BLOCKED, NO_SOUND, NEUTRAL_SOUND
+
+    BLOCKED,
+
+    NO_SOUND,
+
+    NEUTRAL_SOUND,
+
+    ENABLED
 }

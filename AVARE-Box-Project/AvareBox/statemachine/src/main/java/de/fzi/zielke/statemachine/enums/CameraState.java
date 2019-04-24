@@ -1,8 +1,17 @@
 package de.fzi.zielke.statemachine.enums;
 
 /**
- *  Represents the different intervention steps for taking pictures.
+ *  Represents the different privacy steps for camera access.
  */
 public enum CameraState {
-    BLOCKED, BLACK_PICTURE, NEUTRAL_PICTURE, PIXEL_PERSONS
+
+    BLOCKED,
+
+    BLACK_PICTURE,
+
+    NEUTRAL_PICTURE,
+
+    PIXELED,
+
+    ENABLED
 }

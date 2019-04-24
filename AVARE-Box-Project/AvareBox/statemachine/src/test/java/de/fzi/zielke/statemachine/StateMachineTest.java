@@ -1,10 +1,8 @@
 package de.fzi.zielke.statemachine;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.fzi.zielke.statemachine.enums.AppState;
 import de.fzi.zielke.statemachine.enums.CameraState;
 import de.fzi.zielke.statemachine.enums.MicrophoneState;
 
