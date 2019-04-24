@@ -13,10 +13,6 @@ import cat.ereza.customactivityoncrash.provider.CaocInitProvider;
 import static app.avare.yahfa.HookInfo.TAG;
 
 
-/**
- * Created by liuruikai756 on 30/03/2017.
- */
-
 public class Hook_Activity_onCreate {
     public static String className = "android.app.Activity";
     public static String methodName = "onCreate";
