@@ -1,7 +1,7 @@
 micFilterPlugin
 --------------------------
 
-The micFilterPlugin controls the access to microphone with the MediaRecorder class. It hooks the following methods:
+The micFilterPlugin controls the access to the microphone with the MediaRecorder class. It hooks the following methods:
 
 - start()
 - stop()
