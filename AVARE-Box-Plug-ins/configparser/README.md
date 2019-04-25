@@ -1,7 +1,7 @@
 ConfigParser
 -----------
 
-The ConfigParser creates a library that provides methods of parsing JSON-Files and allows the AVARE-Box-Plug-ins to read and use the settings defined in the config file. Also it provides the functionality to change the block settings.
+The ConfigParser creates a library that provides methods of parsing JSON-Files and allows the AVARE-Box-Plug-ins to read and use the settings defined in the config file. It also provides the functionality to change the block settings.
  
  To update a newer version of the aar for the Plug-ins, simply build this updated project and copy the resulting aar (ConfigParser-debug.aar) into the ConfigParser directory in the specific Plug-in project. Finally, rename the aar into ConfigParser.aar.
 
