@@ -1,7 +1,7 @@
 API Log Plugin
 --------------------------
 
-The API Log plugin writes log entries for camera and microphone API calls to the apiLog.txt file.
+The API Log plugin writes log entries for camera and microphone API calls in the apiLog.txt file.
 
 Usage: 
 1. push the file apiLogPlugin.apk to your phone
