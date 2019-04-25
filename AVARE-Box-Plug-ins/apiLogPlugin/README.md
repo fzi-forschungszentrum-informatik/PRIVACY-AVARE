@@ -1,13 +1,13 @@
-API Log Plugin
+API Log Plug-in
 --------------------------
 
-The API Log plugin writes log entries for camera and microphone API calls in the apiLog.txt file.
+The API Log Plug-in writes log entries for camera and microphone API calls in the apiLog.txt file.
 
 Usage: 
 1. push the file apiLogPlugin.apk to your phone
 2. start AVARE Box
 3. click 'Add App'
-4. install the plugin
+4. install the plug-in
 5. start the app you want to monitor (via AVARE BOX)
 6. read the apiLog.txt
 
@@ -25,4 +25,4 @@ Example log file:
 
 ![alt text](https://github.com/chritsian/PRIVACY-AVARE/blob/master/AVARE-Box-Plug-ins/apiLogPlugin/screenshot/screen.PNG)
 
-If you have any ideas to improve the plugin, feel free to contact us!
+If you have any ideas to improve the plug-in, feel free to contact us!
