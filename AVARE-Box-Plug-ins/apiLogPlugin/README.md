@@ -23,6 +23,6 @@ Actual logged APIs:
 
 Example log file:
 
-![alt text](https://github.com/chritsian/PRIVACY-AVARE/blob/master/AVARE-Box-Plug-ins/apiLogPlugin/screenshot/screen.PNG)
+![alt text](https://github.com/chritsian/PRIVACY-AVARE/blob/master/AVARE-Box-Plug-ins/apiLogPlugin/apiLogPlugin.PNG)
 
 If you have any ideas to improve the plug-in, feel free to contact us!
