@@ -1,7 +1,7 @@
 package app.avare.lib.configparser;
 
 /*
-        Copyright 2016-2018 AVARE project team
+        Copyright 2016-2019 AVARE project team
 
         AVARE-Project was financed by the Baden-Württemberg Stiftung gGmbH (www.bwstiftung.de).
         Project partners are FZI Forschungszentrum Informatik am Karlsruher
@@ -25,15 +25,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class JSONParser {
     private FileReader fr;
+    private FileWriter writer;
     private String config;
     private JSONObject configJSON;
 
     public JSONParser() {
         this.fr = new FileReader();
-        this.config = fr.readFile("preferences.json");
+        this.writer = new FileWriter("exampleSettings.json"); //test file
+        this.config = fr.readFile("exampleSettings.json"); //test file
         try {
             this.configJSON = new JSONObject(config);
         } catch (JSONException e) {
@@ -187,6 +188,93 @@ public class JSONParser {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    /**
+     * Reads the microphone preference from JSON file.
+     *
+     * @return the specified state as a String
+     */
+    public String getMicrophoneState () {
+        try {
+            JSONObject settings = this.getSettings();
+            JSONObject mic = settings.getJSONObject("mic");
+            if (mic.getString("status").equals("enabled")) {
+                return "enabled";
+            } else {
+                JSONObject blockSettings = mic.getJSONObject("blockSettings");
+                return blockSettings.getString("blockStatus");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Reads the camera preference from JSON file.
+     *
+     * @return the specified state as a String
+     */
+    public String getCameraState () {
+        try {
+            JSONObject settings = this.getSettings();
+            JSONObject cam = settings.getJSONObject("camera");
+            if (cam.getString("status").equals("enabled")) {
+                return "enabled";
+            } else if(cam.getString("status").equals("filtered")) {
+                return "filtered";
+            }  else {
+                JSONObject blockSettings = cam.getJSONObject("blockSettings");
+                return blockSettings.getString("blockStatus");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    private void setBlockState(JSONObject root, String status) {
+        root.remove("blockStatus");
+        try {
+            root.put("blockStatus", status);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        writer.writeFile(configJSON.toString());
+    }
+
+    private JSONObject getBlockSettings(String name) {
+        try {
+            JSONObject settings = this.getSettings();
+            JSONObject obj = settings.getJSONObject(name);
+            return obj.getJSONObject("blockSettings");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Changes the block setting for the camera attribute.
+     *
+     * @param state new value
+     */
+    public void setCameraState (String state) {
+        setBlockState(getBlockSettings("camera"), state);
+    }
+
+
+    /**
+     * Changes the block setting for the microphone attribute.
+     *
+     * @param state new value
+     */
+    public void setMicrophoneState (String state) {
+        setBlockState(getBlockSettings("mic"), state);
     }
 
     /*

@@ -1,7 +1,7 @@
 package app.avare.lib.configparser;
 
 /*
-        Copyright 2016-2018 AVARE project team
+        Copyright 2016-2019 AVARE project team
 
         AVARE-Project was financed by the Baden-Württemberg Stiftung gGmbH (www.bwstiftung.de).
         Project partners are FZI Forschungszentrum Informatik am Karlsruher
@@ -29,11 +29,12 @@ import java.io.IOException;
 public class FileReader {
 
     public String readFile(String filename) {
-        //File sdcard = Environment.getExternalStorageDirectory();
+        File sdcard = Environment.getExternalStorageDirectory();
         //Log.i("Contacts Plugin", "current path: " + sdcard.getAbsolutePath());
         //TODO: this is NOT how one should access the files folder need CONTEXT!
         File filesDir = new File("/data/data/app.avare/files");
-        File f = new File(filesDir, filename);
+        //File f = new File(sdcard, filename);
+        File f = new File( Environment.getExternalStorageDirectory().getAbsolutePath() + "/exampleSettings.json");
 
         StringBuilder sb = new StringBuilder();
 
